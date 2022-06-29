@@ -1,32 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   push_swap_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/06 05:56:23 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/06/28 22:14:49 by minsuki2         ###   ########.fr       */
+/*   Created: 2022/06/06 19:22:46 by minsuki2          #+#    #+#             */
+/*   Updated: 2022/06/29 08:30:19 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
-# include <stdio.h>
-# include <stdlib.h>
+#include "push_swap.h"
 
-typedef struct s_header
+t_stack *ft_stack_lstnew(int num)
 {
-	int num;
-	int idx;
-	struct s_stack *next;
-} t_stack;
+	nord_lst	*new:
 
-typedef struct s_stack
+
+	new = malloc(sizeof(nord_lst));
+	if (!new)
+		return (NULL);
+	new->num = num;
+	new->prev = behind;
+	new->next = NULL;
+	return (new);
+}
+
+t_stack *stack_lstadd_back
+
+int ft_isspace(int c)
 {
-	int num;
-	int idx;
-	struct s_stack *next;
-} t_stack;
-
-#endif
+	return (c == ' ');
+}

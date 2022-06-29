@@ -6,7 +6,7 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 05:56:17 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/06/28 01:54:30 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/06/28 22:55:32 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,38 @@ int nord_list(char *av)
 
 	ft_bzero(&set, sizeof(nord))
 
+int av_check(char **input)
+{
+	t_stack
+	while (*input)
+	{
+		while (**input)
+		{
+			if (!(ft_isdigit(**input) && ft_isspace(**input)))
+				return (ERROR);
+
+
+			(**input)++;
+		}
+		(*input)++;
+	}
+}
+
 int	main(int ac, char *av[])
 {
+	t_cursor head;
+
 	if (ac < 2)
-		return (-1);
+	{
+		ft_printf("ERROR : less input")
+		return (ERROR);
+	}
+	if (av_check(av) == ERROR)
+	{
+		ft_printf("ERROR : wrong input")
+		return (ERROR);
+	}
+
 	if (nord_list(av, &set) == ERROR)
 		return (0);
 	if (ac % 2 == 0)

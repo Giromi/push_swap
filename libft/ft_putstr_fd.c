@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_utils.c                                  :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/06 19:22:46 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/06/06 19:32:18 by minsuki2         ###   ########.fr       */
+/*   Created: 2021/12/29 23:17:33 by minsuki2          #+#    #+#             */
+/*   Updated: 2022/01/24 16:43:37 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-nord_lst *ft_nord_lstnew(nord_lst *behind, int num)
+void	ft_putstr_fd(char *s, int fd)
 {
-	nord_lst	*new:
-
-	new = malloc(sizeof(nord_lst));
-	if (!new)
-		return (NULL);
-	new->num = num;
-	new->prev = behind;
-	new->next = NULL;
-	return (new);
+	if (fd < 0 || !s)
+		return ;
+	while (*s)
+		ft_putchar_fd(*s++, fd);
 }
