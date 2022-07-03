@@ -6,7 +6,7 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 22:59:57 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/01 05:14:01 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/03 05:43:58 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+void	*ft_charundo(char *s);
 int		ft_isminus(int c);
 int		ft_issp(int c);
 void	full_clean(char **array);
@@ -32,15 +33,23 @@ size_t	ft_strlcpy_known(char *dst, char const *src, size_t len
 		, size_t dstsize);
 char	*ft_strjoin_addsp(char const *s1, char const *s2);
 void	stack_circle(t_stack **lst);
-void	ra(t_cursor *head);
-void	rra(t_cursor *head);
-void	pb(t_cursor *head);
-void sa(t_cursor *head);
 
-void rb(t_cursor *head);
-void rrb(t_cursor *head);
-void rr(t_cursor *head);
-void rrr(t_cursor *head);
+char	*pa(t_cursor *head, char *result);
+char	*pb(t_cursor *head, char *result);
+
+char	*sa(t_cursor *head, char *result);
+char	*sb(t_cursor *head, char *result);
+char	*ss(t_cursor *head, char *result);
+
+char	*ra(t_cursor *head, char *result);
+char	*rb(t_cursor *head, char *result);
+char	*rr(t_cursor *head, char *result);
+
+char	*rra(t_cursor *head, char *result);
+char	*rrb(t_cursor *head, char *result);
+char	*rrr(t_cursor *head, char *result);
+
+void	order_print(char *result);
 
 int av_check(char **av, t_stack **input)
 {
@@ -83,6 +92,15 @@ int av_check(char **av, t_stack **input)
 	return (0);
 }
 
+void ft_info()
+{
+	printf("-----------------------");
+	printf("< push swap simulator >");
+	printf("-----------------------");
+	printf("push swap 명령어 : ra, rb, pa, pb, sa, sb, ss, rra, rrb, rrr\n");
+}
+
+
 int main(int ac, char *av[])
 {
 	t_cursor	*head;
@@ -95,10 +113,14 @@ int main(int ac, char *av[])
 	ssize_t		rd;
 	char		**array;
 	char		*buf;
+	char		*tmp[4];
+	char		*order;
 	int			i;
 	char		c;
 
 	/* ft_bzero(input, sizeof(t_stack)); */
+	order = (char *)malloc(sizeof(char));
+	ft_bzero(order, sizeof(char));
 	input = NULL;
 	if (ac < 2)
 	{
@@ -115,7 +137,7 @@ int main(int ac, char *av[])
 	head = (t_cursor *)malloc(sizeof(t_cursor));
 	head->cur_a = input;
 	head->cur_b = NULL;
-	buf = (char *)malloc(sizeof(char) * 4);
+	buf = (char *)malloc(sizeof(char) * 5);
 	while (1)
 	{
 		/* head->b = stack_a; */
@@ -149,32 +171,47 @@ int main(int ac, char *av[])
 		stack_b = head->cur_b;
 		printf("----------BOT----------\n\n");
 
-		ft_bzero(buf, sizeof(char) * 4);
+		ft_bzero(buf, sizeof(char) * 5);
 		write(1, "command => ", 11);
 		rd = read(0, buf, 4);
-		if (buf == ft_strnstr(buf, "00", 2))
+		write(1, buf, 4);
+		if (buf == ft_strnstr(buf, "00\n", 3))
 			break ;
-		else if (buf == ft_strnstr(buf, "ra", 2))
-			ra(head);
-		else if (buf == ft_strnstr(buf, "rb", 2))
-			rb(head);
-		else if (buf == ft_strnstr(buf, "rr", 2))
-			rr(head);
-		else if (buf == ft_strnstr(buf, "rra", 3))
-			rra(head);
-		else if (buf == ft_strnstr(buf, "rrb", 3))
-			rrb(head);
-		else if (buf == ft_strnstr(buf, "rrr", 3))
-			rrr(head);
-		else if (buf == ft_strnstr(buf, "sa", 3))
-			sa(head);
-		else if (buf == ft_strnstr(buf, "pb", 3))
-			pb(head);
+		else if (buf == ft_strnstr(buf, "00\n", 3))
+			ft_info();
+		else if (buf == ft_strnstr(buf, "-1\n", 3))
+			order = ft_charundo(order);
+		else if (ft_strnstr(buf, "pa\n", 3))
+			order = pa(head, order);
+		else if (ft_strnstr(buf, "pb\n", 3))
+			order = pb(head, order);
+		else if (ft_strnstr(buf, "sa\n", 3))
+			order = sa(head, order);
+		else if (ft_strnstr(buf, "sb\n", 3))
+			order = sb(head, order);
+		else if (ft_strnstr(buf, "ra\n", 3))
+			order = ra(head, order);
+		else if (ft_strnstr(buf, "rb\n", 3))
+			order = rb(head, order);
+		else if (ft_strnstr(buf, "rra\n", 4))
+			order = rra(head, order);
+		else if (ft_strnstr(buf, "rrb\n", 4))
+			order = rrb(head, order);
+		else if (ft_strnstr(buf, "ss\n", 3))
+			order = ss(head, order);
+		else if (ft_strnstr(buf, "rr\n", 3))
+			order = rr(head, order);
+		else if (ft_strnstr(buf, "rrr\n", 4))
+			order = rrr(head, order);
 		else
 			printf("noting\n");
 	}
 	free(buf);
 	stack_lstfclean(head);
+	printf("-----------------------\n");
+	order_print(order);
+	free(order);
+
 	/* system("leaks out --quit"); */
 
 	return (0);

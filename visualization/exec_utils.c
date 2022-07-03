@@ -6,12 +6,14 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 03:16:28 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/01 05:56:33 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/03 05:45:09 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../mandatory/push_swap.h"
+/* #include "push_swap.h" */
 #include <stdlib.h>
+#include <unistd.h>
 
 /* t_stack	*ft_lstlast(t_stack *lst) */
 /* { */
@@ -36,6 +38,44 @@
 		/* tmp->next = new; */
 	/* } */
 /* } */
+
+void	*ft_charjoin(char *s, char c)
+{
+	char	*pt;
+	int		len;
+
+	if (!s || !c)
+		return (NULL);
+	len = ft_strlen(s) + 1;
+	pt = (char *)malloc(sizeof(char) * (len + 1));
+	pt[len] = '\0';
+
+	if (!pt)
+		return (NULL);
+	ft_strlcpy(pt, s, len + 1);
+	pt[len - 1] = c;
+	free(s);
+	return (pt);
+}
+
+void	*ft_charundo(char *s)
+{
+	char	*pt;
+	int		size;
+
+	if (!s)
+		return (NULL);
+	size = ft_strlen(s) - 1;
+	if (size < 0)
+		return (NULL);
+	pt = (char *)malloc(sizeof(char) * size);
+	pt[size - 1] = '\0';
+	if (!pt)
+		return (NULL);
+	ft_strlcpy(pt, s, size);
+	free(s);
+	return (pt);
+}
 
 int ft_isminus(int c)
 {
@@ -236,26 +276,80 @@ void stack_cut(t_stack **lst)
 	}
 }
 
-void sa(t_cursor *head)
+char	*sa(t_cursor *head, char *result)
 {
 	t_stack	*tmp;
 
 	if (!head->cur_a || !head->cur_a->next)
-		return ;
-	head->cur_a->next->priv = head->cur_a->priv;
+		return (result);
+	tmp = head->cur_a->next->next;
+	if (head->cur_a->next->next)
+		head->cur_a->next->next->priv = head->cur_a;
+	head->cur_a->next->next = head->cur_a;
+	if (head->cur_a->priv != head->cur_a->next)
+		head->cur_a->next->priv = head->cur_a->priv;
 	head->cur_a->priv = head->cur_a->next;
-	head->cur_a->next->next->priv = head->cur_a;
-	head->cur_a->next = head->cur_a->next->next;
-	head->cur_a->priv->next = head->cur_a;
+	head->cur_a->next = tmp;
 	head->cur_a = head->cur_a->priv;
+	return (ft_charjoin(result, BIT_SA));
 }
 
-void pb(t_cursor *head)
+char	*sb(t_cursor *head, char *result)
+{
+	t_stack	*tmp;
+
+	if (!head->cur_b || !head->cur_b->next)
+		return (result);
+	tmp = head->cur_b->next->next;
+	if (head->cur_b->next->next)
+		head->cur_b->next->next->priv = head->cur_b;
+	head->cur_b->next->next = head->cur_b;
+	if (head->cur_b->priv != head->cur_b->next)
+		head->cur_b->next->priv = head->cur_b->priv;
+	head->cur_b->priv = head->cur_b->next;
+	head->cur_b->next = tmp;
+	head->cur_b = head->cur_b->priv;
+	return (ft_charjoin(result, BIT_SB));
+}
+
+char	*ss(t_cursor *head, char *result)
+{
+	result = sa(head, result);
+	return (sb(head, result));
+}
+
+char	*pa(t_cursor *head, char *result)
+{
+	t_stack *tmp;
+
+	if (!head->cur_b)
+		return (result);
+	tmp = head->cur_b;
+	if (head->cur_b->next)
+	{
+		head->cur_b->next->priv = head->cur_b->priv;
+		head->cur_b = head->cur_b->next;
+	}
+	else
+		head->cur_b = NULL;		// if) head->cur_a empty
+	tmp->next = head->cur_a;
+	tmp->priv = tmp;
+	if (head->cur_a)
+	{
+		tmp->priv = head->cur_a->priv;
+		head->cur_a->priv = tmp;
+	}
+	head->cur_a = tmp;
+	return (ft_charjoin(result, BIT_PA));
+}
+
+
+char	*pb(t_cursor *head, char *result)
 {
 	t_stack *tmp;
 
 	if (!head->cur_a)
-		return ;
+		return (result);
 	tmp = head->cur_a;
 	if (head->cur_a->next)
 	{
@@ -267,68 +361,113 @@ void pb(t_cursor *head)
 	tmp->next = head->cur_b;
 	tmp->priv = tmp;
 	if (head->cur_b)
+	{
 		tmp->priv = head->cur_b->priv;
+		head->cur_b->priv = tmp;
+	}
 	head->cur_b = tmp;
+	return (ft_charjoin(result, BIT_PB));
 }
 
-void pa(t_cursor *head)
-{
-	t_stack *tmp;
-
-	head->cur_b->priv->next = head->cur_b->next;
-	head->cur_b->next->priv = head->cur_b->priv;
-	tmp = head->cur_b->next;
-	head->cur_b->next = head->cur_a;
-	head->cur_b->priv = NULL;
-	head->cur_a = head->cur_b;
-	head->cur_b = tmp;
-}
-
-void ra(t_cursor *head)
+char	*ra(t_cursor *head, char *result)
 {
 	if (!head->cur_a || !head->cur_a->next)
-		return ;
+		return (result);
 	head->cur_a->priv->next = head->cur_a;
 	head->cur_a = head->cur_a->next;
 	head->cur_a->priv->next = NULL;
+	return (ft_charjoin(result, BIT_RA));
 }
 
-void rb(t_cursor *head)
+
+char	*rb(t_cursor *head, char *result)
 {
 	if (!head->cur_b || !head->cur_b->next)
-		return ;
+		return (result);
 	head->cur_b->priv->next = head->cur_b;
 	head->cur_b = head->cur_b->next;
 	head->cur_b->priv->next = NULL;
+	return (ft_charjoin(result, BIT_RB));
 }
 
-void rra(t_cursor *head)
+char	*rr(t_cursor *head, char *result)
+{
+	result = ra(head, result);
+	return (rb(head, result));
+}
+
+char	*rra(t_cursor *head, char *result)
 {
 	if (!head->cur_a || head->cur_a->priv == head->cur_a)
-		return ;
+		return (result);
 	head->cur_a->priv->next = head->cur_a;
 	head->cur_a = head->cur_a->priv;
 	head->cur_a->priv->next = NULL;
+	return (ft_charjoin(result, BIT_RRA));
 }
 
 
-void rrb(t_cursor *head)
+char	*rrb(t_cursor *head, char *result)
 {
 	if (!head->cur_b || head->cur_b->priv == head->cur_b)
-		return ;
+		return (result);
 	head->cur_b->priv->next = head->cur_b;
 	head->cur_b = head->cur_b->priv;
 	head->cur_b->priv->next = NULL;
+	return (ft_charjoin(result, BIT_RRB));
 }
 
-void rr(t_cursor *head)
+
+char	*rrr(t_cursor *head, char *result)
 {
-	ra(head);
-	rb(head);
+	result = rra(head, result);
+	return (rrb(head, result));
 }
 
-void rrr(t_cursor *head)
+void whether_a_b(char c)
 {
-	rra(head);
-	rrb(head);
+	char	set_a;
+	char	set_b;
+
+	set_a = BIT_PA | BIT_SA | BIT_RA | BIT_RRA;
+	set_b = BIT_PB | BIT_SB | BIT_RB | BIT_RRB;
+
+	if (c & set_a)
+		write(1, "a", 1);
+	else if (c & set_b)
+		write(1, "b", 1);
+}
+
+void	order_print(char *result)
+{
+	int	i;
+	int old_i;
+	int cnt;
+
+	i = 0;
+	cnt = 0;
+	while (result && result[i++])
+	{
+		old_i = i;
+		if (result[i - 1] & (BIT_PA | BIT_PB))
+			write(1, "p", 1);
+		else if ((result[i - 1] | result[i]) == (BIT_SA | BIT_SB) && ++i)
+			write(1, "ss", 2);
+		else if ((result[i - 1] | result[i]) == (BIT_RA | BIT_RB) && ++i)
+			write(1, "rr", 2);
+		else if ((result[i - 1] | result[i]) == (BIT_RRA | BIT_RRB) && ++i)		//	두개 더하면 - overflow 발생해서는 안됨.
+			write(1, "rrr", 3);													//	=> (char)쓰면 80자 넘어감
+		else if (result[i - 1] & (BIT_SA | BIT_SB))
+			write(1, "s", 1);
+		else if (result[i - 1] & (BIT_RA | BIT_RB))
+			write(1, "r", 1);
+		else if (result[i - 1] & (BIT_RRA | BIT_RRB))
+			write(1, "rr", 2);
+		if (old_i == i)
+			whether_a_b(result[i - 1]);
+		write(1, "\n", 1);
+		cnt++;
+	}
+	printf("-------------------\n");
+	printf("Total : %d\n", cnt);
 }
