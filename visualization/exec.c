@@ -6,142 +6,155 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 22:59:57 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/06/29 07:49:24 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/05 01:35:15 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "simulator.h"
 
-#include "push_swap.h"
-#include <stdio.h>
-#include <stdlib.h>
-
-int ft_isminus(int c);
-int ft_issp(int c);
-void full_clean(char **array);
-
-size_t	ft_strlcat_known(char *dst, size_t dst_len, char const *src,
-		size_t src_len);
-size_t	ft_strlcpy_known(char *dst, char const *src, size_t len
-		, size_t dstsize);
-char	*ft_strjoin_addsp(char const *s1, char const *s2);
-
-char	**line_av(char **av)
+int av_check(char **av, t_stack **input)
 {
-	char	*str;
+	int		num;
+	char	*pos;
 	char	*tmp;
-	char	**tmp2;
-	int		i;
+	t_stack	*new;
 
-	str = (char *)malloc(sizeof(char) * 1);
-	str[0] = '\0';
-	i = 1;
-	while (av[i])
-		str = ft_strjoin_addsp(str, av[i++]);
-	tmp2 = ft_split(tmp, ' ');
-	free(tmp);
-	return (tmp2);
-}
-
-int av_check(char **split_av)
-{
-	/* int	num; */
-	/* int	ea; */
-	int i;
-	int j;
-	/* char	**tmp; */
-
-	i = 0;
-	while (split_av[i])
+	av++;
+	while (*av)
 	{
-		j = 0;
-		while (split_av[i][j])
+		while (**av)
 		{
-			if (!(ft_isdigit(split_av[i][j])
-				|| (j = 0 && split_av[i][j] == '-')))
+
+			while (ft_issp(**av))
+				(*av)++;
+			pos = ft_strchr_null(*av, ' ');
+			tmp = *av;
+			if (*tmp == '-')
+				tmp++;
+			while (tmp < pos)
+			{
+				if (!(ft_isdigit(*tmp)))
+					return (ERROR);
+				tmp++;
+			}
+			if (!**av)
+				continue ;
+			num = ft_atoi(*av);
+			new = stack_lstnew(num);
+			if (stack_lstadd_back(input, new) == ERROR)
+			{
+				free(new);
 				return (ERROR);
-			j++;
+			}
+			*av = pos;
 		}
-		i++;
+		av++;
 	}
 	return (0);
-		/* [> while (*av) <] */
-		/* [> { <] */
-
-			/* [> pos = ft_strchr(*av, ' '); <] */
-			/* [> while (*(*av)++) <] */
-			/* [> { <] */
-					/* [> return (ERROR); <] */
-			/* [> } <] */
-			/* [> if (!pos) <] */
-			/* [> break ; <] */
-			/* [> if (!(ft_isdigit(**av) || ft_isminus(**av))) <] */
-				/* [> return (ERROR); <] */
-			/* [> num = ft_atoi(*av); <] */
-			/* [> [> while (ft_isspmi(**av)) <] <] */
-				/* [> [> *av++; <] <] */
-			/* [> if (num != 0 || num == 0 && *(*av + 1) == '0') <] */
-				/* [> printf("%d\n", num); <] */
-			/* [> else <] */
-				/* [> return (ERROR); <] */
-			/* [> *av = pos; <] */
-
-				/* [> return (ERROR); <] */
-
-
-			/* [> while <] */
-			/* [> if (num < 0) <] */
-				/* [> len++; <] */
-
-			/* [> stack_lstadd_back(input, stack_lstnew()) <] */
-			/* [> *av++; <] */
-		/* [> } <] */
-	/* } */
-	/* [> first = *input; <] */
-	/* [> while (*input) <] */
-	/* [> { <] */
-		/* /* *input = *input->next; * */
-		 /* * / */
-	/* [> } <] */
-	/* [> *input = first; <] */
-	/* return (1); */
 }
+
+void ft_info()
+{
+	printf("-----------------------");
+	printf("< push swap simulator >");
+	printf("-----------------------");
+	printf("push swap 명령어 : ra, rb, pa, pb, sa, sb, ss, rra, rrb, rrr\n");
+}
+
 
 int main(int ac, char *av[])
 {
-	t_cursor	head;
+	t_cursor	*head;
 	t_stack		*input;
-	char		**array;
-	int			i;
+	t_stack		*stack_a;
+	t_stack		*stack_b;
+	char		*buf;
+	char		*order;
 
+	order = (char *)malloc(sizeof(char));
+	ft_bzero(order, sizeof(char));
+	input = NULL;
 	if (ac < 2)
 	{
 		printf("ERROR : less input\n");
 		return (ERROR);
 	}
-
-	/* input = NULL; */
-	array = line_av(av);
-	i = 1;
-	while (array[i])
-	{
-		write(1, array[i], ft_strlen(array[i]));
-		write(1, "\n", 1);
-		i++;
-	}
-
-	if (av_check(array) == ERROR)
+	if (av_check(av, &input) == ERROR)
 	{
 		printf("ERROR : wrong input\n");
-		full_clean(array);
+		lst_clean(&input);
 		return (ERROR);
 	}
-	full_clean(array);
-	/* system("leaks out --quit"); */
+	stack_circle(&input);
+	head = (t_cursor *)malloc(sizeof(t_cursor));
+	head->cur_a = input;
+	head->cur_b = NULL;
+	buf = (char *)malloc(sizeof(char) * 5);
+	while (1)
+	{
+		write(1, "-----------------------", 23);
+		printf("\nstack A\t\tstack B\n");
+		printf("----------TOP----------\n");
+		stack_a = head->cur_a;
+		stack_b = head->cur_b;
+		while (stack_a || stack_b)
+		{
+			if (stack_a && stack_b)
+				printf("    %d\t\t  %d    \n", stack_a->num, stack_b->num);
+			else if (stack_a && !stack_b)
+				printf("    %d\t\t     \n", stack_a->num);
+			else if (!stack_a && stack_b)
+				printf("     \t\t  %d    \n", stack_b->num);
+			else
+				printf("    \t\t    \n");
+			if (stack_a)
+				stack_a = stack_a->next;
+			if (stack_b)
+				stack_b = stack_b->next;
+		}
+		stack_a = head->cur_a;
+		stack_b = head->cur_b;
+		printf("----------BOT----------\n\n");
+
+		ft_bzero(buf, sizeof(char) * 5);
+		write(1, "command => ", 11);
+		read(0, buf, 4);
+		write(1, buf, 4);
+		if (ft_strnstr(buf, "00\n", 3))
+			break ;
+		else if (ft_strnstr(buf, "00\n", 3))
+			ft_info();
+		else if (ft_strnstr(buf, "-1\n", 3))
+			order = ft_charundo(order);
+		else if (ft_strnstr(buf, "pa\n", 3))
+			order = pa(head, order);
+		else if (ft_strnstr(buf, "pb\n", 3))
+			order = pb(head, order);
+		else if (ft_strnstr(buf, "sa\n", 3))
+			order = sa(head, order);
+		else if (ft_strnstr(buf, "sb\n", 3))
+			order = sb(head, order);
+		else if (ft_strnstr(buf, "ra\n", 3))
+			order = ra(head, order);
+		else if (ft_strnstr(buf, "rb\n", 3))
+			order = rb(head, order);
+		else if (ft_strnstr(buf, "rra\n", 4))
+			order = rra(head, order);
+		else if (ft_strnstr(buf, "rrb\n", 4))
+			order = rrb(head, order);
+		else if (ft_strnstr(buf, "ss\n", 3))
+			order = ss(head, order);
+		else if (ft_strnstr(buf, "rr\n", 3))
+			order = rr(head, order);
+		else if (ft_strnstr(buf, "rrr\n", 4))
+			order = rrr(head, order);
+		else
+			printf("noting\n");
+	}
+	free(buf);
+	stack_lstfclean(head);
+	printf("-----------------------\n");
+	order_print(order);
+	free(order);
 	return (0);
 }
-
-
-	/* while (1) */
-	/* { */
-		/* stack_print(); */
-	/* } */

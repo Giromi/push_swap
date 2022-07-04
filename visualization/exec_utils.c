@@ -6,38 +6,11 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 03:16:28 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/03 05:45:09 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/05 01:30:00 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../mandatory/push_swap.h"
-/* #include "push_swap.h" */
-#include <stdlib.h>
-#include <unistd.h>
-
-/* t_stack	*ft_lstlast(t_stack *lst) */
-/* { */
-	/* if (!lst) */
-		/* return (NULL); */
-	/* while (lst->next) */
-		/* lst = lst->next; */
-	/* return (lst); */
-/* } */
-
-/* void	stack_lstadd_back(t_stack **lst, t_stack *new) */
-/* { */
-	/* t_stact	*tmp; */
-
-	/* if (!lst || !new) */
-		/* return ; */
-	/* if (!*lst) */
-		/* *lst = new; */
-	/* else */
-	/* { */
-		/* tmp = stack_lstlast(*lst); */
-		/* tmp->next = new; */
-	/* } */
-/* } */
+#include "simulator.h"
 
 void	*ft_charjoin(char *s, char c)
 {
@@ -179,8 +152,6 @@ t_stack *stack_lstnew(int num)
 
 t_stack	*stack_lstlast(t_stack *lst, int check)
 {
-	t_stack	*first;
-
 	if (!lst || (check && lst->num == check))
 		return (NULL);
 	if (check && lst->num > check)
@@ -429,8 +400,8 @@ void whether_a_b(char c)
 	char	set_a;
 	char	set_b;
 
-	set_a = BIT_PA | BIT_SA | BIT_RA | BIT_RRA;
-	set_b = BIT_PB | BIT_SB | BIT_RB | BIT_RRB;
+	set_a = (char)(BIT_PA | BIT_SA | BIT_RA | BIT_RRA);
+	set_b = (char)(BIT_PB | BIT_SB | BIT_RB | BIT_RRB);
 
 	if (c & set_a)
 		write(1, "a", 1);
