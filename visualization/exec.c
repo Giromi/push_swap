@@ -6,59 +6,72 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 22:59:57 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/05 01:35:15 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/05 10:46:59 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "simulator.h"
 
+static int	check_part(char **av, int *num, char *flag)
+{
+	char	*tmp;
+	char	*pos;
+
+	while (ft_issp(**av))
+		(*av)++;
+	if (!**av && !*flag)
+		return (ERROR);
+	if (!**av)
+		return (SUCCESS);
+	*flag = 'f';
+	pos = ft_strchr_null(*av, ' ');
+	tmp = *av;
+	if (*tmp == '-' || *tmp == '+')
+		if (!(ft_isdigit((*(++tmp)))))
+			return (ERROR);
+	while (tmp < pos)
+		if (!(ft_isdigit(*tmp++)))
+			return (ERROR);
+	*num = ft_simple_atoi(*av);
+	if ((*num > 0 && **av == '-') || (*num < 0 && **av != '-'))
+		return (ERROR);
+	*av = pos;
+	return (SUCCESS);
+}
+
 int av_check(char **av, t_stack **input)
 {
 	int		num;
-	char	*pos;
-	char	*tmp;
+	char	flag;
 	t_stack	*new;
 
-	av++;
-	while (*av)
+	while (*(++av))
 	{
+		flag = '\0';
 		while (**av)
 		{
-
-			while (ft_issp(**av))
-				(*av)++;
-			pos = ft_strchr_null(*av, ' ');
-			tmp = *av;
-			if (*tmp == '-')
-				tmp++;
-			while (tmp < pos)
-			{
-				if (!(ft_isdigit(*tmp)))
-					return (ERROR);
-				tmp++;
-			}
+			if (check_part(av, &num, &flag) == ERROR)
+				return (ERROR);
 			if (!**av)
-				continue ;
-			num = ft_atoi(*av);
+				break ;
 			new = stack_lstnew(num);
 			if (stack_lstadd_back(input, new) == ERROR)
 			{
-				free(new);
+				if (new)
+					free(new);
 				return (ERROR);
 			}
-			*av = pos;
 		}
-		av++;
 	}
 	return (0);
 }
 
 void ft_info()
 {
-	printf("-----------------------");
-	printf("< push swap simulator >");
-	printf("-----------------------");
-	printf("push swap 명령어 : ra, rb, pa, pb, sa, sb, ss, rra, rrb, rrr\n");
+	ft_printf("-----------------------");
+	ft_printf("< push swap simulator >");
+	ft_printf("-----------------------");
+	ft_printf("push swap 명령어 : ra, rb, pa, pb, sa, sb, ss, rra, rrb, rrr\n");
 }
 
 
@@ -76,12 +89,12 @@ int main(int ac, char *av[])
 	input = NULL;
 	if (ac < 2)
 	{
-		printf("ERROR : less input\n");
+		ft_printf("ERROR : less input\n");
 		return (ERROR);
 	}
 	if (av_check(av, &input) == ERROR)
 	{
-		printf("ERROR : wrong input\n");
+		ft_printf("ERROR : wrong input\n");
 		lst_clean(&input);
 		return (ERROR);
 	}
@@ -93,20 +106,20 @@ int main(int ac, char *av[])
 	while (1)
 	{
 		write(1, "-----------------------", 23);
-		printf("\nstack A\t\tstack B\n");
-		printf("----------TOP----------\n");
+		ft_printf("\nstack A\t\tstack B\n");
+		ft_printf("----------TOP----------\n");
 		stack_a = head->cur_a;
 		stack_b = head->cur_b;
 		while (stack_a || stack_b)
 		{
 			if (stack_a && stack_b)
-				printf("    %d\t\t  %d    \n", stack_a->num, stack_b->num);
+				ft_printf("    %d\t\t  %d    \n", stack_a->num, stack_b->num);
 			else if (stack_a && !stack_b)
-				printf("    %d\t\t     \n", stack_a->num);
+				ft_printf("    %d\t\t     \n", stack_a->num);
 			else if (!stack_a && stack_b)
-				printf("     \t\t  %d    \n", stack_b->num);
+				ft_printf("     \t\t  %d    \n", stack_b->num);
 			else
-				printf("    \t\t    \n");
+				ft_printf("    \t\t    \n");
 			if (stack_a)
 				stack_a = stack_a->next;
 			if (stack_b)
@@ -114,7 +127,7 @@ int main(int ac, char *av[])
 		}
 		stack_a = head->cur_a;
 		stack_b = head->cur_b;
-		printf("----------BOT----------\n\n");
+		ft_printf("----------BOT----------\n\n");
 
 		ft_bzero(buf, sizeof(char) * 5);
 		write(1, "command => ", 11);
@@ -149,11 +162,11 @@ int main(int ac, char *av[])
 		else if (ft_strnstr(buf, "rrr\n", 4))
 			order = rrr(head, order);
 		else
-			printf("noting\n");
+			ft_printf("noting\n");
 	}
 	free(buf);
 	stack_lstfclean(head);
-	printf("-----------------------\n");
+	ft_printf("-----------------------\n");
 	order_print(order);
 	free(order);
 	return (0);

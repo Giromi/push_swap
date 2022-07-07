@@ -6,7 +6,7 @@
 #    By: minsuki2 <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 18:42:17 by minsuki2          #+#    #+#              #
-#    Updated: 2022/07/05 01:34:52 by minsuki2         ###   ########.fr        #
+#    Updated: 2022/07/05 09:16:13 by minsuki2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,8 +25,9 @@ LIBFT_DIR 		=	libft/
 LIBFT 			=	libft.a
 EXE				=	simulator
 
-SRCS			=	exec.c	\
-					exec_utils.c
+SRCS			=	exec.c				\
+					exec_utils.c		\
+					ft_simple_atoi.c
 
 OBJS		=	$(SRCS:.c=.o)
 
@@ -37,7 +38,7 @@ $(FTPRINTF_DIR)$(FTPRINTF):
 
 $(EXE): $(SRCS)
 	@echo @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-	$(CC) $(CFLAGS) $(SRCS) $(FTPRINTF_DIR)$(FTPRINTF) $(INC)./ $(INC)$(FTPRINTF_DIR) $(INC)$(LIBFT_DIR) -o $@
+	$(CC) -g $(CFLAGS) $(SRCS) $(FTPRINTF_DIR)$(FTPRINTF) $(INC)./ $(INC)$(FTPRINTF_DIR) $(INC)$(LIBFT_DIR) -o $@
 	@echo @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 %.o: %.c #$(HADS)
@@ -46,6 +47,7 @@ $(EXE): $(SRCS)
 
 clean:
 	$(MAKE_C) $(LIBFT_DIR) clean
+	$(MAKE_C) $(FTPRINTF_DIR) clean
 	@echo
 	@echo ">>>>>>>>>>>>>>>> Delete List <<<<<<<<<<<<<<<<<<<<"
 	@$(RM) $(SRCS:.c=.o)

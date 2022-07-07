@@ -6,7 +6,7 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 05:56:23 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/05 01:36:02 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/05 08:42:55 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include "libft.h"
 # include "ft_printf.h"
+# include "libft.h"
 # define ERROR		-1
 # define SUCCESS	0
 # define BIT_SA		0B00000001
@@ -27,6 +27,8 @@
 # define BIT_RRB	0B00100000
 # define BIT_PA		0B01000000
 # define BIT_PB		0B10000000
+# define VAL_INT_MIN	2147483648
+# define VAL_INT_MAX	2147483647
 
 typedef struct s_stack
 {
@@ -73,5 +75,6 @@ char	*rra(t_cursor *head, char *result);
 char	*rrb(t_cursor *head, char *result);
 char	*rrr(t_cursor *head, char *result);
 void	order_print(char *result);
+int		ft_simple_atoi(const char *str);
 
 #endif

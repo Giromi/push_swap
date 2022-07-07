@@ -6,7 +6,7 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 03:16:28 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/05 01:30:00 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/05 08:36:00 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -442,3 +442,4 @@ void	order_print(char *result)
 	printf("-------------------\n");
 	printf("Total : %d\n", cnt);
 }
+
