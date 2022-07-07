@@ -6,7 +6,7 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 22:59:57 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/05 10:46:59 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/07 21:41:29 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,6 @@ static int	check_part(char **av, int *num, char *flag)
 	char	*tmp;
 	char	*pos;
 
-	while (ft_issp(**av))
-		(*av)++;
-	if (!**av && !*flag)
-		return (ERROR);
-	if (!**av)
-		return (SUCCESS);
 	*flag = 'f';
 	pos = ft_strchr_null(*av, ' ');
 	tmp = *av;
@@ -48,12 +42,14 @@ int av_check(char **av, t_stack **input)
 	while (*(++av))
 	{
 		flag = '\0';
-		while (**av)
+		while (1)					// "" 들어오면 error 나와야해서**av 조건 사용 안됨
 		{
-			if (check_part(av, &num, &flag) == ERROR)
+			while (ft_issp(**av))
+				(*av)++;
+			if (flag && !**av)
+				break;
+			if ((!flag && !**av) || check_part(av, &num, &flag) == ERROR)
 				return (ERROR);
-			if (!**av)
-				break ;
 			new = stack_lstnew(num);
 			if (stack_lstadd_back(input, new) == ERROR)
 			{
@@ -63,7 +59,7 @@ int av_check(char **av, t_stack **input)
 			}
 		}
 	}
-	return (0);
+	return (SUCCESS);
 }
 
 void ft_info()

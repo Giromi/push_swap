@@ -6,7 +6,7 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 05:56:23 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/05 08:42:55 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/07 22:01:04 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,16 @@
 # define BIT_PB		0B10000000
 # define VAL_INT_MIN	2147483648
 # define VAL_INT_MAX	2147483647
+//enum error_msg
+//{
+//	msg_noInput = 0,
+//	msg_notInt,
+//	msg_overflowInt,
+//	msg_underflowInt,
+//	msg_duplicates,
+//	msg_emptyspace
+//
+//} msg_type;
 
 typedef struct s_stack
 {

@@ -9,3 +9,4 @@
 ./simulator 2147483648 +3  4- " "
 ./simulator +2147483648 +3  4- " "
 ./simulator -2147483649 " "
+./simulator "" 33
