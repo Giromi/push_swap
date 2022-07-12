@@ -6,7 +6,7 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 03:16:28 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/07 22:06:04 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/09 00:05:53 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,8 +234,7 @@ void	stack_lstfclean(t_cursor *head)
 		return ;
 	lst_clean(&head->cur_a);
 	lst_clean(&head->cur_b);
-	if (head)
-		free(head);
+	free(head);
 }
 
 void stack_cut(t_stack **lst)

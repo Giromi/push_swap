@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
+#    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: minsuki2 <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 18:42:17 by minsuki2          #+#    #+#              #
-#    Updated: 2022/06/26 16:51:52 by minsuki2         ###   ########.fr        #
+#    Updated: 2022/07/10 23:35:01 by minsuki2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,17 +26,15 @@ TARGET_DIR 		= $(MANDATORY_DIR)
 
 LIBFT_DIR 		=	libft/
 LIBFT 			=	libft.a
-SEND_OUT		=	client
-RECEIVE_OUT		=	server
-NAME	 		=	$(SEND_OUT) $(RECEIVE_OUT)
+NAME	 		=	pushswap
 
-SRC_DIR				=	srcs/
-SEND_SRCS			=	sender.c
-RECEIVE_SRCS		=	receiver.c
-SEND_SRCS_BONUS		=	sender_bonus.c
-RECEIVE_SRCS_BONUS	=	receiver_bonus.c
-# HAD_FILES 		=	ft_printf.h
-# BONUS_HAD_FILES =	ft_printf_bonus.h
+SRCS			=	push_swap.c			\
+					push_swap_utils.c	\
+					ft_simple_atoi.c	\
+					case_under_ten.c	\
+					quick_sort.c
+			# HAD_FILES 		=	ft_printf.h
+	# BONUS_HAD_FILES =	ft_printf_bonus.h
 
 # MINITALK_HADS = $(HAD_FILES))
 
@@ -44,22 +42,19 @@ RECEIVE_SRCS_BONUS	=	receiver_bonus.c
 # MINITALK_HADS_BONUS = $(addprefix $(BONUS_DIR), $(BONUS_HAD_FILES))
 
 # OBJS = $(MINITALK_OBJS)
-# HADS = $(MINITALK_HADS)
-
-SEND_OBJS		=	$(addprefix $(MANDATORY_DIR), $(SEND_SRCS:.c=.o))
-RECEIVE_OBJS	=	$(addprefix $(MANDATORY_DIR), $(RECEIVE_SRCS:.c=.o))
+OBJS		=	$(addprefix $(MANDATORY_DIR), $(SRCS:.c=.o))
 
 all: $(FTPRINTF_DIR)$(FTPRINTF) $(NAME)
 
 $(FTPRINTF_DIR)$(FTPRINTF):
 	$(MAKE_C) $(FTPRINTF_DIR)
 
-$(NAME): $(SEND_OBJS) $(RECEIVE_OBJS)
+$(NAME): $(OBJS)
 	@echo @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-	$(CC) $(CFLAGS) $(SEND_OBJS) $(FTPRINTF_DIR)$(FTPRINTF) -o $(SEND_OUT)
-	$(CC) $(CFLAGS) $(RECEIVE_OBJS) $(FTPRINTF_DIR)$(FTPRINTF) -o $(RECEIVE_OUT)
+	$(CC) -g $(CFLAGS) $(addprefix $(MANDATORY_DIR), $(SRCS)) $(FTPRINTF_DIR)$(FTPRINTF) $(INC)$(FTPRINTF_DIR) $(INC)$(LIBFT_DIR) -o $@
 	@echo @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-	@echo client \<=\> sever Compiled!
+	@echo Push swap Compiled!
+# $(CC) -g $(CFLAGS)  $^ $(FTPRINTF_DIR)$(FTPRINTF) -o $@
 
 %.o: %.c #$(HADS)
 	@echo $@ Making...
@@ -67,16 +62,11 @@ $(NAME): $(SEND_OBJS) $(RECEIVE_OBJS)
 
 clean:
 	$(MAKE_C) $(LIBFT_DIR) clean
+	$(MAKE_C) $(FTPRINTF_DIR) clean
 	@echo
 	@echo ">>>>>>>>>>>>>>>> Delete List <<<<<<<<<<<<<<<<<<<<"
-	@$(RM) $(MANDATORY_DIR)$(SEND_SRCS:.c=.o)
-	@$(RM) $(MANDATORY_DIR)$(RECEIVE_SRCS:.c=.o)
-	@$(RM) $(MANDATORY_DIR)$(SEND_SRCS_BONUS:.c=.o)
-	@$(RM) $(MANDATORY_DIR)$(RECEIVE_SRCS_BONUS:.c=.o)
-	@$(RM) $(BONUS)$(SEND_SRCS:.c=.o)
-	@$(RM) $(BONUS)$(RECEIVE_SRCS:.c=.o)
-	@$(RM) $(BONUS)$(SEND_SRCS_BONUS:.c=.o)
-	@$(RM) $(BONUS)$)$(RECEIVE_SRCS_BONUS:.c=.o)
+	@$(RM) $(MANDATORY_DIR)$(SRCS:.c=.o)
+	@$(RM) $(MANDATORY_DIR)$(SRCS:.c=.o)
 	@echo ">>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<"
 	@echo
 
@@ -95,9 +85,8 @@ re:
 
 bonus: $(LIBFT_DIR)$(LIBFT)
 	@$(MAKE) \
-	"SEND_OBJS		=	$(addprefix $(BONUS_DIR), $(SEND_SRCS_BONUS:.c=.o))"		\
-	"RECEIVE_OBJS	=	$(addprefix $(BONUS_DIR), $(RECEIVE_SRCS_BONUS:.c=.o))" 	\
 	"TARGET_DIR 	=	$(BONUS_DIR)"												\
+	"OBJS		=	$(addprefix $(BONUS_DIR), $(SRCS:.c=.o))"					\
 	all
 
 .PHONY: all clean fclean re bonus
