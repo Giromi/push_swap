@@ -6,7 +6,7 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 05:56:17 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/20 18:00:05 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/20 19:26:59 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ int main(int ac, char *av[])
 	t_cursor	head;
 	t_stack		*input;
 	char		*order;
-	int	examine;
-	int	cnt;
+	/* int	examine; */
+	/* int	cnt; */
 
 	input = NULL;
 	if (ac < 2 || av_check(av, &input) == ERROR)
@@ -117,15 +117,16 @@ int main(int ac, char *av[])
 	/* px(&head, head.cur_b, head.cur_a, &order); */
 	/* px(&head, head.cur_b, head.cur_a, &order); */
 	/* debug_print(&head, 0); */
-	printf("-------------------\n");
-	examine = debug_sort_check(&head);
-	/* examine = next_check_nspot(&head, 3, '2'); */
-	cnt = order_print(order);
-	printf("-------------------\n");
-	if (examine == ERROR)
-		printf("Total : %d || Sort : %s\n", cnt, "KO");
-	else
-		printf("Total : %d || Sort : %s\n", cnt, "OK");
+	/* printf("-------------------\n"); */
+	/* examine = debug_sort_check(&head); */
+	/* [> examine = next_check_nspot(&head, 3, '2'); <] */
+	/* cnt = order_print(order); */
+	order_print(order);
+	/* printf("-------------------\n"); */
+	/* if (examine == ERROR) */
+		/* printf("Total : %d || Sort : %s\n", cnt, "KO"); */
+	/* else */
+		/* printf("Total : %d || Sort : %s\n", cnt, "OK"); */
 	stack_lstfclean(&head);
 	free(order);
 	return (SUCCESS);

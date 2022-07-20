@@ -6,7 +6,7 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 19:22:46 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/20 10:21:37 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/20 19:25:56 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -515,13 +515,6 @@ int	order_print(char *result)
 	while (result[i++])
 	{
 		old_i = i;
-		/* if (ft_charnstr(result + i - 1, ea_a, ea_b, (BIT_RA | BIT_RB))) */
-		/* { */
-			/* write(1, "rr", 2); */
-			/* i += ea_a; */
-		// 다음 문자열이 확정 되어야 출력
-		//
-		/* } */
 		if (result[i - 1] & (BIT_PA | BIT_PB))
 			write(1, "p", 1);
 		else if ((result[i - 1] | result[i]) == (BIT_SA | BIT_SB) && ++i)
