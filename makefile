@@ -1,12 +1,12 @@
-# **************************************************************************** #
-#                                                                              #
+	# **************************************************************************** #
+	#                                                                              #
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: minsuki2 <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 18:42:17 by minsuki2          #+#    #+#              #
-#    Updated: 2022/07/10 23:35:01 by minsuki2         ###   ########.fr        #
+#    Updated: 2022/07/20 19:11:22 by minsuki2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,19 +26,23 @@ TARGET_DIR 		= $(MANDATORY_DIR)
 
 LIBFT_DIR 		=	libft/
 LIBFT 			=	libft.a
-NAME	 		=	pushswap
+NAME	 		=	push_swap
 
-SRCS			=	push_swap.c			\
-					push_swap_utils.c	\
-					ft_simple_atoi.c	\
-					case_under_ten.c	\
+SRCS			=	push_swap.c				\
+					push_swap_utils.c		\
+					push_swap_command.c		\
+					basic_command.c			\
+					ft_simple_atoi.c		\
+					case_under_five.c		\
+					case_under_five_utils.c	\
+					hard_coding.c			\
 					quick_sort.c
 			# HAD_FILES 		=	ft_printf.h
 	# BONUS_HAD_FILES =	ft_printf_bonus.h
 
 # MINITALK_HADS = $(HAD_FILES))
 
-# MINITALK_OBJS_BONUS = $(addprefix $(BONUS_DIR), $(BONUS_SRC_FILES:.c=.o))
+MINITALK_OBJS_BONUS = $(addprefix $(BONUS_DIR), $(BONUS_SRC_FILES:.c=.o))
 # MINITALK_HADS_BONUS = $(addprefix $(BONUS_DIR), $(BONUS_HAD_FILES))
 
 # OBJS = $(MINITALK_OBJS)
@@ -51,10 +55,10 @@ $(FTPRINTF_DIR)$(FTPRINTF):
 
 $(NAME): $(OBJS)
 	@echo @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-	$(CC) -g $(CFLAGS) $(addprefix $(MANDATORY_DIR), $(SRCS)) $(FTPRINTF_DIR)$(FTPRINTF) $(INC)$(FTPRINTF_DIR) $(INC)$(LIBFT_DIR) -o $@
+	$(CC) -g -fsanitize=address $(CFLAGS) $(addprefix $(MANDATORY_DIR), $(SRCS)) $(FTPRINTF_DIR)$(FTPRINTF) $(INC)$(FTPRINTF_DIR) $(INC)$(LIBFT_DIR) -o $@
 	@echo @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 	@echo Push swap Compiled!
-# $(CC) -g $(CFLAGS)  $^ $(FTPRINTF_DIR)$(FTPRINTF) -o $@
+# $(CC) $(CFLAGS)  $^ $(FTPRINTF_DIR)$(FTPRINTF) -o $@
 
 %.o: %.c #$(HADS)
 	@echo $@ Making...

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-ARG_cnt_0=("0 1 2")
+ARG_cnt_0=("0" "0 1" "0 1 2")
 ARG_cnt_1=("1 0 2" "1 2 0" "2 0 1")
 ARG_cnt_2=("0 2 1" "2 1 0")
 
@@ -22,7 +22,7 @@ done
 
 echo
 echo
-echo "@@@@@@@ [Total = 1] @@@@@@@"
+echo "@@@@@@@ [Total = 1t] @@@@@@@"
 for i in "${ARG_cnt_1[@]}"
 do
 	my_pushswap

@@ -26,10 +26,13 @@ ARG17=("4 2 0 1 3" "4 2 1 3 0" "4 2 3 0 1" "4 2 0 3 1" "4 2 1 0 3" "4 2 3 1 0")
 ARG18=("4 3 0 1 2" "4 3 1 2 0" "4 3 2 0 1" "4 3 0 2 1" "4 3 1 0 2" "4 3 2 1 0")
 ARG19=("4 0 1 2 3" "4 0 2 3 1" "4 0 3 1 2" "4 0 1 3 2" "4 0 2 1 3" "4 0 3 2 1")
 
-# ARG_cnt_0=("0 1 2 3 4")
-# ARG_cnt_1=("1 2 3 4 0" "4 0 1 2 3" "1 0 2 3 4")
-# ARG_cnt_2=("2 1 3 4 0" "2 3 4 0 1" "0 1 3 4 0")
-# ARG_cnt_3=("3 4 0 1 2")
+ARG_cnt_0=("0 1 2 3 4")
+#			ra			rra			sa
+ARG_cnt_1=("1 2 3 4 0" "4 0 1 2 3" "1 0 2 3 4")
+#			sa			ra			sa			rra			ra			rra
+ARG_cnt_2=("2 1 3 4 0" "2 3 4 0 1" "0 4 1 2 3" "3 4 0 1 2" "0 2 3 4 1" "4 1 0 2 3")
+# #			ra			rra			sa			ra			ra			rra									sa			ra			sa			rra
+# ARG_cnt_3=("1 3 4 0 2" "0 2 1 3 4" "3 2 4 0 1" "3 4 0 1 2" "4 1 2 3 0" "3 0 4 1 2" "4 3 0 1 2" "2 3 4 0 1" "2 0 3 4 1" "2 3 4 1 0" "1 4 0 2 3" "3 4 1 0 2")
 # ARG_cnt_4=()
 # ARG_cnt_2=("0 2 3 1" "0 3 1 2" "2 1 3 0" "2 3 0 1" "3 1 0 2" )
 # ARG_cnt_3=("0 2 1 3" "1 3 0 2" "2 0 3 1" "2 3 1 0" "3 2 0 1" "3 1 2 0" )
@@ -43,6 +46,30 @@ my_pushswap()
 	echo "CASE : $i"
 	./pushswap "$i"
 }
+
+# printf "\n\n\n\n@@@@@@@ [Total = 0] @@@@@@@\n"
+# for i in "${ARG_cnt_0[@]}"
+# do
+	# my_pushswap
+# done
+
+# printf "\n\n\n\n@@@@@@@ [Total = 1] @@@@@@@\n"
+# for i in "${ARG_cnt_1[@]}"
+# do
+	# my_pushswap
+# done
+
+# printf "\n\n\n\n@@@@@@@ [Total = 2] @@@@@@@\n"
+# for i in "${ARG_cnt_2[@]}"
+# do
+	# my_pushswap
+# done
+
+# printf "\n\n\n\n@@@@@@@ [Total = 3] @@@@@@@\n"
+# for i in "${ARG_cnt_3[@]}"
+# do
+	# my_pushswap
+# done
 
 for i in "${ARG00[@]}"
 do

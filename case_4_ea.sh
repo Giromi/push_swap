@@ -18,7 +18,7 @@ my_pushswap()
 {
 	echo
 	echo "CASE : $i"
-	./pushswap "$i"
+	./push_swap "$i"
 }
 
 # for i in "${ARG1[@]}"
@@ -28,11 +28,11 @@ my_pushswap()
 
 #------------------
 
-# printf "\n\n@@@@@@@ [Total = 0] @@@@@@@\n"
-# for i in "${ARG_cnt_0[@]}"
-# do
-	# my_pushswap
-# done
+printf "\n\n@@@@@@@ [Total = 0] @@@@@@@\n"
+for i in "${ARG_cnt_0[@]}"
+do
+	my_pushswap
+done
 
 printf "\n\n@@@@@@@ [Total = 1] @@@@@@@\n"
 for i in "${ARG_cnt_1[@]}"

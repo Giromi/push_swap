@@ -6,14 +6,13 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 05:56:17 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/12 17:30:49 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/20 18:00:05 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void debug_print(t_cursor *head, int choice, char *cur_order);
-void stdio_test(t_cursor *head, char **order, int order_len);
+char	stdio_test(t_cursor *head, char **order);
 
 static int	check_part(char **av, int *num, char *flag)
 {
@@ -73,11 +72,6 @@ int av_check(char **av, t_stack **input)
 	/* ft_printf("push swap 명령어 : ra, rb, pa, pb, sa, sb, ss, rra, rrb, rrr\n"); */
 /* } */
 
-void ft_error_exit()
-{
-	ft_printf(":wq");
-	exit(1);
-}
 
 int debug_sort_check(t_cursor *head)
 {
@@ -95,57 +89,37 @@ int debug_sort_check(t_cursor *head)
 	return (SUCCESS);
 }
 
-
 int main(int ac, char *av[])
 {
 	t_cursor	head;
 	t_stack		*input;
 	char		*order;
-	int			order_len;
 	int	examine;
 	int	cnt;
 
-	order_len = -1;
-	order = (char *)malloc(sizeof(char));
-	ft_bzero(order, sizeof(char));
 	input = NULL;
 	if (ac < 2 || av_check(av, &input) == ERROR)
 	{
-		ft_printf("Error\n");
+		ft_putstr_fd("Error\n", 2);
 		lst_clean(&input);
 		return (ERROR);
 	}
 	stack_headset(&head, input);
+	order = (char *)malloc(sizeof(char));
+	ft_bzero(order, sizeof(char));
 
-	/* if (head.cnt_a > 5) */
-		/* order = quick_sort(&head, order); */
-	/* order = case_check(&head, order); */
-
-	/* debug_print(&head, 0); */
+	if (case_check(&head, &order) == ERROR && head.cnt_a > 5)
+		stack_a_to_b(&head, &order, head.cnt_b, head.cnt_a);
+	/* debug_print(&head, 2); */
 	/* if (px(&head, head.cur_a, head.cur_b, &order) == SUCCESS) */
 		/* order_len++; */
-	/* debug_print(&head, 1, order + order_len); */
-	/* if (px(&head, head.cur_a, head.cur_b, &order) == SUCCESS) */
-		/* order_len++; */
-	/* debug_print(&head, 1, order + order_len); */
-	/* if (rx(&head, head.cur_a, &order) == SUCCESS) */
-		/* order_len++; */
-	/* debug_print(&head, 1, order + order_len); */
-	/* if (rx(&head, head.cur_b, &order) == SUCCESS) */
-		/* order_len++; */
-	/* debug_print(&head, 1, order + order_len); */
-	/* if (rrx(&head, head.cur_a, &order) == SUCCESS) */
-		/* order_len++; */
-	/* debug_print(&head, 1, order + order_len); */
-	/* if (sx(&head, head.cur_a, &order) == SUCCESS) */
-		/* order_len++; */
-	stdio_test(&head, &order, order_len);
+	/* stdio_test(&head, &order); */
 	/* px(&head, head.cur_b, head.cur_a, &order); */
-	/* debug_print(&head, 0); */
 	/* px(&head, head.cur_b, head.cur_a, &order); */
 	/* debug_print(&head, 0); */
 	printf("-------------------\n");
 	examine = debug_sort_check(&head);
+	/* examine = next_check_nspot(&head, 3, '2'); */
 	cnt = order_print(order);
 	printf("-------------------\n");
 	if (examine == ERROR)
@@ -181,14 +155,14 @@ void simple_order_print(char cur_order)
 }
 
 
-void debug_print(t_cursor *head, int choice, char *cur_order)
+void debug_print(t_cursor *head, int choice)
 {
 	t_stack		*stack_a;
 	t_stack		*stack_b;
 
-	write(1, "[COMMAND] ", 10);
-	if (cur_order)
-		simple_order_print(*cur_order);
+	write(1, "[COMMAND]\n", 10);
+	/* if (cur_order) */
+		/* simple_order_print(*cur_order); */
 	write(1, "-----------------------", 23);
 	ft_printf("\nstack A\t\tstack B\n");
 	ft_printf("----------TOP----------\n");
@@ -210,11 +184,22 @@ void debug_print(t_cursor *head, int choice, char *cur_order)
 		else if (choice == 1)
 		{
 			if (stack_a && stack_b)
-				ft_printf("    %d|%c| \t  %d|%c|    \n", stack_a->idx, stack_a->spot, stack_b->idx, stack_b->spot);
+				ft_printf("    %d|'%c'| \t  %d|'%c'|    \n", stack_a->idx, stack_a->spot, stack_b->idx, stack_b->spot);
 			else if (stack_a && !stack_b)
-				ft_printf("    %d|%c|\t     \n", stack_a->idx, stack_a->spot);
+				ft_printf("    %d|'%c'|\t     \n", stack_a->idx, stack_a->spot);
 			else if (!stack_a && stack_b)
-				ft_printf("    \t\t  %d|%c|    \n", stack_b->idx, stack_b->spot);
+				ft_printf("    \t\t  %d|'%c'|    \n", stack_b->idx, stack_b->spot);
+			else
+				ft_printf("    \t\t    \n");
+		}
+		else if (choice == 3)
+		{
+			if (stack_a && stack_b)
+				ft_printf("    %d|[%d]| \t  %d|[%d]|    \n", stack_a->idx, stack_a->tmp_idx, stack_b->idx, stack_b->tmp_idx);
+			else if (stack_a && !stack_b)
+				ft_printf("    %d|[%d]|\t     \n", stack_a->idx, stack_a->tmp_idx);
+			else if (!stack_a && stack_b)
+				ft_printf("    \t\t  %d|[%d]|    \n", stack_b->idx, stack_b->tmp_idx);
 			else
 				ft_printf("    \t\t    \n");
 		}
@@ -240,14 +225,14 @@ void debug_print(t_cursor *head, int choice, char *cur_order)
 	ft_printf("   (%d)\t\t  (%d)  \n\n", head->cnt_a, head->cnt_b);
 }
 
-void stdio_test(t_cursor *head, char **order, int order_len)
+char stdio_test(t_cursor *head, char **order)
 {
 	char		*buf;
 
 	buf = (char *)malloc(sizeof(char) * 5);
 	while (1)
 	{
-		debug_print(head, 1, *order + order_len);
+		debug_print(head, 3);
 		ft_bzero(buf, sizeof(char) * 5);
 		write(1, "input => ", 9);
 		read(0, buf, 4);
@@ -283,13 +268,15 @@ void stdio_test(t_cursor *head, char **order, int order_len)
 		{
 			rrx(head, head->cur_a, order);
 			rrx(head, head->cur_b, order);
-			order_len++;
 		}
 		else
 		{
 			ft_printf("retry!!!\n");
 			continue ;
 		}
+		if (!order)
+			ft_printf("isproblem\n");
 	}
 	free(buf);
+	return (BIT_ALL);
 }

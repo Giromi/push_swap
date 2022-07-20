@@ -6,123 +6,111 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 22:49:31 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/12 12:06:19 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/20 17:59:58 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+void stack_go_to_top(t_cursor *head, char **order, int spot, int cnt)
+{
+	while (spot == '1' && cnt--)
+		rrx(head, head->cur_a, order);
+	while (spot == '3' && cnt--)
+		rrx(head, head->cur_b, order);
+}
 
-/* char *quick_sort(t_cursor *head, char *order) */
-/* { */
-	/* int	pivot1; */
-	/* int	pivot2; */
-	/* int n; */
+void stack_b_to_a(t_cursor *head, char **order, int offset, int n)
+{
+	int limit = 3;
+	int pv1;
+	int pv2;
+	t_cnt	count;
 
-	/* [> pivot1 = head->cnt_a / 3 + (head->cnt_a % 2 == 2); <] */
-	/* [> pivot2 = pivot1 * 2 + (head->cnt_a % 2 > 0); <] */
-
-	/* debug_print(head, 0); */
-	/* pivot1 = head->cnt_a / 3; */
-	/* pivot2 = pivot1 * 2 + (head->cnt_a % 3 == 2); */
-	/* for (int i = 0; i < pivot1; i++) */
-		/* ft_printf("%d ", i); */
-	/* ft_printf("/ "); */
-	/* for (int i = pivot1; i < pivot2; i++) */
-		/* ft_printf("%d ", i); */
-	/* ft_printf("/ "); */
-	/* for (int i = pivot2; i < head->cnt_a; i++) */
-		/* ft_printf("%d ", i); */
-	/* printf("\n"); */
-	/* n = head->cnt_a; */
-	/* while (1) */
-	/* { */
-		/* if (head->cur_a->idx < pivot1) */
-		/* { */
-			/* order = pb(head, order); */
-			/* order = rb(head, order); */
-		/* } */
-		/* else if (head->cur_a->idx < pivot2) */
-			/* order = pb(head, order); */
-		/* else */
-			/* order = ra(head, order); */
-		/* if ((head->cnt_a <= n - pivot2)) */
-			/* break ; */
-	/* } */
-	/* order = case_check(head, order); */
+	ft_bzero(&count, sizeof(t_cnt));
+	pv1 = n / 3 + offset;
+	pv2 = 2 * (n / 3) + (n % 3 == 2) + offset;
+	if (n <= limit)
+	{
+		wall_check_stack(head, order, n, '2');
+		/* debug_print(head, 1); */
+		while (n--)
+			px(head, head->cur_b, head->cur_a, order);
+		/* debug_print(head, 1); */
+		return ;
+	}
+	else if (n / 3 < limit)
+	{
+		pv2 = n - limit + offset;
+		pv1 = (n - limit) / 2 + (pv2 % 2 != 0) + offset;
+	}
+	while (n--)
+	{
+		if (head->cur_b->idx < pv1 && ++count.rb)
+			rx(head, head->cur_b, order);
+		else if (head->cur_b->idx >= pv1 && ++count.pa)
+		{
+			px(head, head->cur_b, head->cur_a, order);
+			if (head->cur_a->idx < pv2 && ++count.ra)
+				rx(head, head->cur_a, order);
+		}
+	}
 	/* debug_print(head, 1); */
-	/* return (order); */
-/* } */
+	stack_go_to_top(head, order, '3', count.rb);
+	/* debug_print(head, 1); */
+	stack_a_to_b(head, order, pv1, count.pa - count.ra);
+	/* debug_print(head, 1); */
+	stack_go_to_top(head, order, '1', count.ra);
+	/* debug_print(head, 1); */
+	stack_a_to_b(head, order, offset, count.ra);
+	/* debug_print(head, 1); */
+	stack_b_to_a(head, order, offset, count.rb);
+	/* debug_print(head, 1); */
+}
 
-/* void stack_b_to_b_top(t_cursor *head, char **order, int pv1, char reverse) */
-/* { */
-	/* while (head->cur_b->priv < pv1) */
-		/* rrb(head, *order); */
-/* } */
+void	stack_a_to_b(t_cursor *head, char **order, int offset, int n)
+{
+	int limit = 3;
+	int pv1;
+	int pv2;
+	t_cnt	count;
 
-/* void stack_b_to_a(t_cursor *head, char **order) */
-/* { */
-
-	/* if (head->cur_a->idx < pivot1) */
-	/* { */
-		/* pa(head, *order); */
-		/* ra(head, *order); */
-		/* debug_print(head, 1); */
-	/* } */
-	/* else if (head->cur_a->idx < pivot2) */
-	/* { */
-		/* order = pa(head, *order); */
-		/* debug_print(head, 1); */
-	/* } */
-	/* else */
-		/* order = sa(head, *order); */
-	/* stack_b_to_b_top(head, order, pv1); */
-	/* if (head->cnt_b > head) */
-		/* stack_b_to_a(head, order); */
-/* } */
-
-
-/* void stack_a_to_b(t_cursor *head, char **order, char reverse) */
-/* { */
-	/* int	pv1; */
-	/* int	pv2; */
-
-	/* pv1 = head->cnt_a / 3; */
-	/* pv2 = pivot1 * 2 + (head->cnt_a % 3 == 2); */
-
-	/* if (head->cur_a->idx < pivot1) */
-	/* { */
-		/* pb(head, *order); */
-		/* rb(head, *order); */
-		/* debug_print(head, 1); */
-	/* } */
-	/* else if (head->cur_a->idx < pivot2) */
-	/* { */
-		/* order = pb(head, *order); */
-		/* debug_print(head, 1); */
-	/* } */
-	/* else */
-		/* order = ra(head, *order); */
-	/* stack_b_to_b_top(head, order, pv1); */
-	/* if (head->cnt_a > pv1) */
-		/* stack_a_to_b(head, order); */
-	/* order = case_check(head, order); */
-	/* stack_b_to_a(head, order); */
-/* } */
-
-
-
-
-
-
-
-/* void	recursive_sort(t_cursor *head, char *order) */
-/* { */
-
-	/* stack_a_to_b(head, &order); */
-	/* order = case_check(head, order); */
-	/* stack_b_to_a(head, &order); */
-	/* return ; */
-/* } */
-
-
+	ft_bzero(&count, sizeof(t_cnt));
+	pv1 = n / 3 + offset;
+	pv2 = 2 * (n / 3) + (n % 3 == 2) + offset;
+	if (n <= limit)			// < 1 2 3
+	{
+		wall_check_stack(head, order, n, '0');
+		return ;
+	}
+	else if (n / 3 < limit)	// < 4 5 6 7 8 9 10 11
+	{
+		pv2 = n - limit + offset;
+		pv1 = (n - limit) / 2 + (pv2 % 2 != 0) + offset;
+	}
+	while (n--)
+	{
+		if (head->cur_a->idx >= pv2 && ++count.ra)
+		{
+			rx(head, head->cur_a, order);
+		}
+		else if (head->cur_a->idx < pv2 && ++count.pb)
+		{
+			px(head, head->cur_a, head->cur_b, order);
+			if (head->cur_b->idx < pv1 && ++count.rb)
+			{
+				rx(head, head->cur_b, order);
+			}
+		}
+	}
+	/* debug_print(head, 1); */
+	stack_go_to_top(head, order, '1', count.ra);
+	stack_a_to_b(head, order, pv2, count.ra);
+	/* debug_print(head, 1); */
+	stack_b_to_a(head, order, pv1, count.pb - count.rb);
+	/* debug_print(head, 1); */
+	stack_go_to_top(head, order, '3', count.rb);
+	/* debug_print(head, 1); */
+	stack_b_to_a(head, order, offset, count.rb);
+	/* debug_print(head, 1); */
+}

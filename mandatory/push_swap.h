@@ -18,6 +18,8 @@
 # include "libft.h"
 # define ERROR		-1
 # define SUCCESS	0
+# define BIT_INT	0B00000000
+# define BIT_ALL	0B11111111
 # define BIT_SA		0B00000001
 # define BIT_SB		0B00000010
 # define BIT_RA		0B00000100
@@ -26,6 +28,9 @@
 # define BIT_RRB	0B00100000
 # define BIT_PA		0B01000000
 # define BIT_PB		0B10000000
+# define BIT_SS		0B00000011
+# define BIT_RR		0B00001100
+# define BIT_RRR	0B00110000
 # define VAL_INT_MIN	2147483648
 # define VAL_INT_MAX	2147483647
 
@@ -47,6 +52,15 @@ typedef struct s_cursor
 	int	cnt_b;
 } t_cursor;
 
+typedef struct s_cnt
+{
+	int	pa;
+	int	pb;
+	int ra;
+	int rb;
+} t_cnt;
+
+void	ft_emergency(t_cursor *head, char *order);
 size_t	ft_strlen(const char *s);
 int		ft_isspace(int);
 void	*ft_charundo(char *s);
@@ -66,27 +80,50 @@ size_t	ft_strlcat_known(char *dst, size_t dst_len, char const *src,
 size_t	ft_strlcpy_known(char *dst, char const *src, size_t len
 		, size_t dstsize);
 char	*ft_strjoin_addsp(char const *s1, char const *s2);
-int	pa(t_cursor *head, char *result);
-int	pb(t_cursor *head, char **result);
-int	sa(t_cursor *head, char *result);
-int	sb(t_cursor *head, char *result);
-int	ss(t_cursor *head, char *result);
-int	ra(t_cursor *head, char *result);
-int	rb(t_cursor *head, char *result);
-int	rr(t_cursor *head, char *result);
-int	rra(t_cursor *head, char *result);
-int	rrb(t_cursor *head, char *result);
-int	rrr(t_cursor *head, char *result);
 int		order_print(char *result);
 int		ft_simple_atoi(const char *str);
 void	stack_headset(t_cursor *head, t_stack *first);
-char *case_check(t_cursor *head, char *order);
-void	stack_pushidx(t_stack *_throw, t_stack *_catch);
-int debug_sort_check(t_cursor *head);
+int	stack_pushidx(t_stack *_throw, t_stack *_catch);
 char *quick_sort(t_cursor *head, char *order);
-int	sx(t_cursor *head, t_stack *top, char **result);
-int	rx(t_cursor *head, t_stack *top, char **result);
-int	rrx(t_cursor *head, t_stack *top, char **result);
-int	px(t_cursor *head, t_stack *_throw, t_stack *_catch, char **result);
+char	sort_rotate_goal(t_cursor *head, char **order, char priv_command);
 
+char	sx(t_cursor *head, t_stack *top, char **result);
+char	rx(t_cursor *head, t_stack *top, char **result);
+char	rrx(t_cursor *head, t_stack *top, char **result);
+char	px(t_cursor *head, t_stack *_throw, t_stack *_catch, char **result);
+void	stack_a_to_b(t_cursor *head, char **order, int offset, int n);
+
+// void	pa(t_cursor *head, char *result);
+// void	pb(t_cursor *head, char *result);
+// void	sa(t_cursor *head, char *result);
+// void	sb(t_cursor *head, char *result);
+// void	ss(t_cursor *head, char *result);
+// void	ra(t_cursor *head, char *result);
+// void	rb(t_cursor *head, char *result);
+// void	rr(t_cursor *head, char *result);
+// void	rra(t_cursor *head, char *result);
+// void	rrb(t_cursor *head, char *result);
+// void	rrr(t_cursor *head, char *result);
+int debug_sort_check(t_cursor *head);
+void debug_print(t_cursor *head, int choice);
+char	ft_counteract(char *str, int *len, char add);
+
+t_stack	*repeat_next(t_stack *top, int n);
+t_stack	*repeat_priv(t_stack *top, int n);
+int	next_check_nspot(t_cursor *head, int n, char spot);
+int	next_check(t_stack *now);
+int priv_check(t_stack *now);
+int	priv_check_limit(t_stack *now, t_stack *first, int delta);
+int priv_check_swap(t_stack *now, int swap_cnt);
+int		sort_swap(t_cursor *head, t_stack *top, char **order);
+char	sort_swap_b(t_cursor *head, char **order);
+
+int		stack_is_a_rotate(t_cursor *head, char **order, char priv, int n);
+int		stack_is_a_roswap(t_cursor *head, char **order, char priv, int n);
+int		case_check(t_cursor *head, char **order);
+int stack_groupidx(t_stack *cur, int n);
+
+void	recursive_sort(t_cursor *head, char **order);
+int wall_check_stack(t_cursor *head, char **order, int n, char spot);
 #endif
+

@@ -6,48 +6,19 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 19:22:46 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/12 18:05:16 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/20 10:21:37 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-/* char *ft_charjoin(char *s, char c) */
-/* { */
-	/* char	*pt; */
-	/* int		len; */
-
-	/* if (!*s || !c) */
-		/* return (ERROR); */
-	/* len = ft_strlen(*s) + 1; */
-	/* pt = (char *)malloc(sizeof(char) * (len + 1)); */
-	/* if (!pt) */
-		/* return (ERROR); */
-	/* pt[len] = '\0'; */
-	/* ft_strlcpy(pt, *s, len + 1); */
-	/* pt[len - 1] = c; */
-	/* free(*s); */
-	/* return (pt); */
-/* } */
-
-int	ft_charjoin(char **s, char c)
+void	ft_emergency(t_cursor *head, char *order)
 {
-	char	*pt;
-	int		len;
-
-	if (!*s || !c)
-		return (ERROR);
-	len = ft_strlen(*s) + 1;
-	pt = (char *)malloc(sizeof(char) * (len + 1));
-	if (!pt)
-		return (ERROR);
-	pt[len] = '\0';
-	ft_strlcpy(pt, *s, len + 1);
-	pt[len - 1] = c;
-	free(*s);
-	*s = pt;
-	return (SUCCESS);
+	stack_lstfclean(head);
+	free(order);
+	exit(1);
 }
+
 
 void	*ft_charundo(char *s)
 {
@@ -190,7 +161,7 @@ t_stack	*stack_lstlast(t_stack *lst, t_stack *new)
 	return (last);
 }
 
-void stack_pushidx(t_stack *_throw, t_stack *_catch)
+int stack_pushidx(t_stack *_throw, t_stack *_catch)
 {
 	int criterion_num;
 	t_stack *push;
@@ -211,7 +182,33 @@ void stack_pushidx(t_stack *_throw, t_stack *_catch)
 		if (_catch)
 			_catch = _catch->next;
 	}
+	return (SUCCESS);
 }
+
+/* int stack_groupidx(t_stack *cur, int n) */
+/* { */
+	/* int		i; */
+	/* int		j; */
+	/* t_stack	*top; */
+
+	/* if (!cur) */
+		/* return (ERROR); */
+	/* i = 0; */
+	/* while (cur->next && i < n - 1) */
+	/* { */
+		/* cur->tmp_idx = 0; */
+		/* top = cur; */
+		/* j = 0; */
+		/* while (top->next && j < n - 1) */
+		/* { */
+			/* if (cur->num > top->num) */
+				/* cur->tmp_idx++; */
+			/* top = top->next; */
+		/* } */
+		/* cur = cur->next; */
+	/* } */
+	/* return (SUCCESS); */
+/* } */
 
 int	stack_lstadd_back(t_stack **lst, t_stack *new)
 {
@@ -288,7 +285,7 @@ void stack_cut(t_stack **lst)
 	/* t_stack	*tmp; */
 
 	/* if (!head->cur_a || !head->cur_a->next) */
-		/* return (result); */
+		/* return (ERROR); */
 	/* tmp = head->cur_a->next->next; */
 	/* if (head->cur_a->next->next) */
 		/* head->cur_a->next->next->priv = head->cur_a; */
@@ -301,12 +298,12 @@ void stack_cut(t_stack **lst)
 	/* return (ft_charjoin(&result, BIT_SA)); */
 /* } */
 
-/* int	sb(t_cursor *head, char *result) */
+/* int	sb(t_cursor *head, char **result) */
 /* { */
 	/* t_stack	*tmp; */
 
 	/* if (!head->cur_b || !head->cur_b->next) */
-		/* return (result); */
+		/* return (ERROR); */
 	/* tmp = head->cur_b->next->next; */
 	/* if (head->cur_b->next->next) */
 		/* head->cur_b->next->next->priv = head->cur_b; */
@@ -319,33 +316,7 @@ void stack_cut(t_stack **lst)
 	/* return (ft_charjoin(&result, BIT_SB)); */
 /* } */
 
-int	sx(t_cursor *head, t_stack *top, char **result)
-{
-	t_stack	*backup;
-	char bit;
 
-	if (!top || !top->next)
-		return (ERROR);
-	backup = top->next->next;
-	if (top->next->next)
-		top->next->next->priv = top;
-	top->next->next = top;
-	if (top->priv != top->next)
-		top->next->priv = top->priv;
-	if (top->spot == '0')
-	{
-		bit = BIT_SA;
-		head->cur_a = top->next;
-	}
-	else if (top->spot == '1')
-	{
-		bit = BIT_SB;
-		head->cur_b = top->next;
-	}
-	top->priv = top->next;
-	top->next = backup;
-	return (ft_charjoin(result, bit));
-}
 
 /* int	ss(t_cursor *head, char *result) */
 /* { */
@@ -353,7 +324,7 @@ int	sx(t_cursor *head, t_stack *top, char **result)
 	/* return (sb(head, result)); */
 /* } */
 
-/* int	pa(t_cursor *head, char *result) */
+/* void	pa(t_cursor *head, char *result) */
 /* { */
 	/* t_stack *tmp; */
 
@@ -382,12 +353,12 @@ int	sx(t_cursor *head, t_stack *top, char **result)
 /* } */
 
 
-/* int	pb(t_cursor *head, char **result) */
+/* void	pb(t_cursor *head, char *result) */
 /* { */
 	/* t_stack *tmp; */
 
 	/* if (!head->cur_a) */
-		/* return (*result); */
+		/* return (NULL); */
 	/* stack_pushidx(head->cur_a, head->cur_b); */
 	/* tmp = head->cur_a; */
 	/* if (head->cur_a->next) */
@@ -399,162 +370,81 @@ int	sx(t_cursor *head, t_stack *top, char **result)
 		/* head->cur_a = NULL;		// if) head->cur_a empty */
 	/* tmp->next = head->cur_b; */
 	/* tmp->priv = tmp; */
-	/* if (head->cur_b) */
+	/* if (head->cnt_a-- && ++head->cnt_b && head->cur_b) */
 	/* { */
 		/* tmp->priv = head->cur_b->priv; */
 		/* head->cur_b->priv = tmp; */
 	/* } */
 	/* head->cur_b = tmp; */
-	/* head->cnt_a--; */
-	/* head->cnt_b++; */
-	/* head->cur_b->spot = 1; */
-	/* *result = ft_charjoin(result, BIT_PB); */
-	/* return (*result); */
+	/* head->cur_b->spot = '1'; */
+	/* return (ft_charjoin(result, BIT_PB)); */
 /* } */
 
 
 
-int	px(t_cursor *head, t_stack *_throw, t_stack *_catch, char **result)
-{
-	if (!_throw)
-		return (ERROR);
-	stack_pushidx(_throw, _catch);
-	if (_throw->next)
-		_throw->next->priv = _throw->priv;
-	_throw->priv = _throw;
-	if (_catch)
-	{
-		_throw->priv = _catch->priv;
-		_catch->priv = _throw;
-	}
-	head->cur_a = _throw->next;
-	head->cur_b = _throw;
-	if (_throw->spot == '1' && ++head->cnt_a && head->cnt_b--)
-	{
-		head->cur_b = _throw->next;
-		head->cur_a = _throw;
-	}
-	_throw->next = _catch;
-	if (_throw->spot == '0' && ++_throw->spot && head->cnt_a-- && ++head->cnt_b)
-		return (ft_charjoin(result, BIT_PB));
-	_throw->spot = '0';
-	return (ft_charjoin(result, BIT_PA));
-}
-
-/* int	ra(t_cursor *head, char *result) */
+/* vid	ra(t_stack **top, char *result) */
 /* { */
 	/* if (!head->cur_a || !head->cur_a->next) */
-		/* return (result); */
+		/* return (NULL); */
 	/* head->cur_a->priv->next = head->cur_a; */
 	/* head->cur_a = head->cur_a->next; */
 	/* head->cur_a->priv->next = NULL; */
 	/* return (ft_charjoin(&result, BIT_RA)); */
 /* } */
 
-int	rx(t_cursor *head, t_stack *top, char **result)
-{
-	char bit;
 
-	if (!top || !top->next)
-		return (ERROR);
-	top->priv->next = top;
-	bit = BIT_RB;
-	if (top->spot == '0' || top->spot == '2')
-	{
-		bit = BIT_RA;
-		head->cur_a = top->next;
-	}
-	else if (top->spot == '1' || top->spot == '3')
-		head->cur_b = top->next;
-	top->spot += 2 * (top->spot < '2');
-	top->next = NULL;
-	/* else if (top->spot == '1' || top->spot == '3') */
-	return (ft_charjoin(result, bit));
-}
-
-int	rrx(t_cursor *head, t_stack *top, char **result)
-{
-	char bit;
-
-	if (!top || !top->next)
-		return (ERROR);
-	top->priv->next = top;
-	bit = BIT_RRB;
-	if (top->spot == '0' || top->spot == '2')
-	{
-		bit = BIT_RRA;
-		head->cur_a = top->priv;
-	}
-	else if (top->spot == '1' || top->spot == '3')
-		head->cur_b = top->priv;
-	top->priv->spot -= 2 * (top->priv->spot >= '2');
-	top->priv->priv->next = NULL;
-	return (ft_charjoin(result, bit));
-}
-/* char	*rx(t_cursor *head, t_stack *top, char **result) */
+/* void	ra(t_cursor *head, char **result) */
 /* { */
-	/* char bit; */
-
-	/* if (!top || !top->next) */
-		/* return (*result); */
-	/* top->priv->next = top; */
-	/* bit = BIT_RB; */
-	/* if (top->spot == '0' || top->spot == '2') */
-	/* { */
-		/* bit = BIT_RA; */
-		/* head->cur_a = top->next; */
-	/* } */
-	/* else if (top->spot == '1' || top->spot == '3') */
-		/* head->cur_b = top->next; */
-	/* top->spot += 2 * ((top->spot >= '2') * (-1) + (top->spot < '2')); */
-	/* top->next = NULL; */
-	/* [> else if (top->spot == '1' || top->spot == '3') <] */
-	/* return (ft_charjoin(result, bit)); */
+	/* if (!head->cur_a || !head->cur_a->next) */
+		/* return (result); */
+	/* head->cur_a->priv->next = head->cur_a; */
+	/* head->cur_a = head->cur_a->next; */
+	/* head->cur_a->priv->next = NULL; */
+	/* return (ft_charjoin(&result, BIT_RB)); */
 /* } */
 
-
-/* int	rb(t_cursor *head, char *result) */
+/* void	rb(t_cursor *head, char **result) */
 /* { */
 	/* if (!head->cur_b || !head->cur_b->next) */
 		/* return (result); */
 	/* head->cur_b->priv->next = head->cur_b; */
 	/* head->cur_b = head->cur_b->next; */
 	/* head->cur_b->priv->next = NULL; */
-	/* return (ft_charjoin(&result, BIT_RB)); */
+	/* ft_charjoin(&result, BIT_RB); */
 /* } */
 
-/* int	rr(t_cursor *head, char *result) */
+/* void	rr(t_cursor *head, char **result) */
 /* { */
-	/* result = ra(head, result); */
-	/* return (rb(head, result)); */
+	/* ra(head, result); */
+	/* rb(head, result): */
 /* } */
 
-/* int	rra(t_cursor *head, char *result) */
+/* void	rra(t_cursor *head, char **result) */
 /* { */
 	/* if (!head->cur_a || head->cur_a->priv == head->cur_a) */
 		/* return (result); */
 	/* head->cur_a->priv->next = head->cur_a; */
 	/* head->cur_a = head->cur_a->priv; */
 	/* head->cur_a->priv->next = NULL; */
-	/* return (ft_charjoin(&result, BIT_RRA)); */
+	/* return (ft_charjoin(result, BIT_RRA)); */
 /* } */
 
 
-/* int	rrb(t_cursor *head, char *result) */
+/* void	rrb(t_cursor *head, char *result) */
 /* { */
 	/* if (!head->cur_b || head->cur_b->priv == head->cur_b) */
 		/* return (result); */
 	/* head->cur_b->priv->next = head->cur_b; */
 	/* head->cur_b = head->cur_b->priv; */
 	/* head->cur_b->priv->next = NULL; */
-	/* return (ft_charjoin(&result, BIT_RRB)); */
+	/* return (ft_charjoin(result, BIT_RRB)); */
 /* } */
 
 
-/* int	rrr(t_cursor *head, char *result) */
+/* void	rrr(t_cursor *head, char **result) */
 /* { */
 	/* rra(head, result); */
-	/* return (rrb(head, result)); */
+	/* rrb(head, result); */
 /* } */
 
 void whether_a_b(char c)
@@ -586,6 +476,32 @@ void whether_a_b(char c)
 	/* return (offset); */
 /* } */
 
+/* void	*ft_charundo(char *s) */
+/* { */
+	/* char	*pt; */
+	/* int		size; */
+
+	/* if (!s) */
+		/* return (NULL); */
+	/* size = ft_strlen(s) - 1; */
+	/* if (size < 0) */
+		/* return (NULL); */
+	/* pt = (char *)malloc(sizeof(char) * size); */
+	/* pt[size - 1] = '\0'; */
+	/* if (!pt) */
+		/* return (NULL); */
+	/* ft_strlcpy(pt, s, size); */
+	/* free(s); */
+	/* return (pt); */
+/* } */
+
+/* int	order_compress(char *result) */
+/* { */
+	/* ra  */
+
+
+/* } */
+
 int	order_print(char *result)
 {
 	int	i;
@@ -603,18 +519,10 @@ int	order_print(char *result)
 		/* { */
 			/* write(1, "rr", 2); */
 			/* i += ea_a; */
+		// 다음 문자열이 확정 되어야 출력
+		//
 		/* } */
-		if ((result[i - 1] | result[i]) == (char)(BIT_PA | BIT_PB) && ++i)
-			continue ;
-		else if ((result[i - 1] == BIT_SA && result[i] == BIT_SA) && ++i)
-			continue ;
-		else if ((result[i - 1] == BIT_SB && result[i] == BIT_SB) && ++i)
-			continue ;
-		else if ((result[i - 1] | result[i]) == (char)(BIT_RA | BIT_RRA) && ++i)
-			continue ;
-		else if ((result[i - 1] | result[i]) == (char)(BIT_RB | BIT_RRB) && ++i)
-			continue ;
-		else if (result[i - 1] & (BIT_PA | BIT_PB))
+		if (result[i - 1] & (BIT_PA | BIT_PB))
 			write(1, "p", 1);
 		else if ((result[i - 1] | result[i]) == (BIT_SA | BIT_SB) && ++i)
 			write(1, "ss", 2);
@@ -669,3 +577,18 @@ void	stack_headset(t_cursor *head, t_stack *first)
 	head->cnt_a = stack_circle(&first);
 	head->cnt_b = 0;
 }
+
+char	ft_counteract(char *str, int *len, char add)
+{
+	if (((str[*len - 2] | add) == (BIT_RRA | BIT_RA))
+			|| ((str[*len - 2] | add) == (BIT_RRB | BIT_RB))
+			|| ((str[*len - 2] | add) == (char)(BIT_PA | BIT_PB))
+			|| (str[*len - 2] == BIT_SA && add == BIT_SA)
+			|| (str[*len - 2] == BIT_SB && add == BIT_SB))
+	{
+		(*len) -= 2;
+		return (BIT_INT);
+	}
+	return (add);
+}
+
