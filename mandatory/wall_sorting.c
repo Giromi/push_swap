@@ -6,7 +6,7 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 20:04:46 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/21 00:05:52 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/21 00:25:32 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@ int where_idx_n(t_cursor *head, int n, char spot)
 	int		find_idx;
 	t_stack *tmp;
 
-	if (spot == '0')
-		tmp = head->cur_a;
-	else if (spot == '2')
+	tmp = head->cur_a;
+	if (spot == '2')
 		tmp = head->cur_b;
 	if (!tmp)
 		return (ERROR);
@@ -188,9 +187,8 @@ int	next_check_nspot(t_cursor *head, int n, char spot)
 {
 	t_stack *now;
 
-	if (spot == '0' && head->cur_a)
-		now = head->cur_a;
-	else if (spot == '2' && head->cur_b)
+	now = head->cur_a;
+	if (spot == '2')
 		now = head->cur_b;
 	if (!now)
 		return (ERROR);
