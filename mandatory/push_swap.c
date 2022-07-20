@@ -6,7 +6,7 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 05:56:17 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/21 00:11:35 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/21 01:14:56 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,23 +90,23 @@ int main(int ac, char *av[])
 //-------------------------------------------------------
 	/* for (int i = 0; i < 8; i++) */
 		/* px(&head, head.cur_a, head.cur_b, NULL); */
-	/* debug_print(&head, 3); */
+	debug_print(&head, 3);
 	/* wall_check_stack(&head, &order, 5, '2'); */
 	/* examine = next_check_nspot(&head, 5, '2'); */
-	/* wall_check_stack(&head, &order, 5, '0'); */
-	/* examine = next_check_nspot(&head, 5, '0'); */
+	wall_check_stack(&head, &order, 3, '0');
+	examine = next_check_nspot(&head, 3, '0');
 	/* px(&head, head.cur_b, head.cur_a, NULL); */
 	/* px(&head, head.cur_b, head.cur_a, NULL); */
 	/* px(&head, head.cur_b, head.cur_a, NULL); */
+	debug_print(&head, 3);
 //-------------------------------------------------------
 
 
-	debug_print(&head, 3);
-	if (case_check(&head, &order) == ERROR && head.cnt_a > 5)
-		stack_a_to_b(&head, &order, head.cnt_b, head.cnt_a);
-	debug_print(&head, 3);
+	/* if (case_check(&head, &order) == ERROR && head.cnt_a > 5) */
+		/* stack_a_to_b(&head, &order, head.cnt_b, head.cnt_a); */
+	/* debug_print(&head, 3); */
 	printf("-------------------\n");
-	examine = debug_sort_check(&head);
+	/* examine = debug_sort_check(&head); */
 	/* stdio_test(&head, &order); */
 	cnt = order_print(order);
 	printf("-------------------\n");
