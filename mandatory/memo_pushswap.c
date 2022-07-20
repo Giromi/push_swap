@@ -59,3 +59,30 @@ limit == 3
 
 		23 24 25 26
 
+
+
+/* void ft_info() */
+/* { */
+	/* ft_printf("-----------------------"); */
+	/* ft_printf("< push swap simulator >"); */
+	/* ft_printf("-----------------------"); */
+	/* ft_printf("push swap 명령어 : ra, rb, pa, pb, sa, sb, ss, rra, rrb, rrr\n"); */
+/* } */
+
+/* char	*ft_charjoin(char *s, char c) */
+/* { */
+	/* char	*pt; */
+	/* int		len; */
+
+	/* if (!s || !c) */
+		/* return (NULL); */
+	/* len = ft_strlen(s) + 1; */
+	/* pt = (char *)malloc(sizeof(char) * (len + 1)); */
+	/* if (!pt) */
+		/* return (NULL); */
+	/* pt[len] = '\0'; */
+	/* ft_strlcpy(pt, s, len + 1); */
+	/* pt[len - 1] = c; */
+	/* free(s); */
+	/* return (pt); */
+/* } */

@@ -9,7 +9,6 @@ NUM=`./push_swap $ARG | wc -l`
 while [ $INDEX -lt $ITER ]
 do
 echo "$INDEX    :   $NUM `./push_swap $ARG | ./checker_Mac $ARG`"
-# echo "$INDEX  :   $NUM"
 if [ $NUM -ge $LIMIT ]; then
 NUM_OVER=`expr $NUM_OVER + 1`
 fi

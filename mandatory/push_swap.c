@@ -6,13 +6,14 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 05:56:17 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/20 19:26:59 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/21 00:11:35 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 char	stdio_test(t_cursor *head, char **order);
+int		debug_sort_check(t_cursor *head);
 
 static int	check_part(char **av, int *num, char *flag)
 {
@@ -64,41 +65,19 @@ int av_check(char **av, t_stack **input)
 	return (SUCCESS);
 }
 
-/* void ft_info() */
-/* { */
-	/* ft_printf("-----------------------"); */
-	/* ft_printf("< push swap simulator >"); */
-	/* ft_printf("-----------------------"); */
-	/* ft_printf("push swap 명령어 : ra, rb, pa, pb, sa, sb, ss, rra, rrb, rrr\n"); */
-/* } */
-
-
-int debug_sort_check(t_cursor *head)
-{
-	t_stack	*lst;
-
-	if (head->cur_b)
-		return (ERROR);
-	lst = head->cur_a;
-	while (lst->next)
-	{
-		if (lst->idx > lst->next->idx)
-			return (ERROR);
-		lst = lst->next;
-	}
-	return (SUCCESS);
-}
 
 int main(int ac, char *av[])
 {
 	t_cursor	head;
 	t_stack		*input;
 	char		*order;
-	/* int	examine; */
-	/* int	cnt; */
+	int	examine;
+	int	cnt;
 
 	input = NULL;
-	if (ac < 2 || av_check(av, &input) == ERROR)
+	if (ac < 2)
+		return (ERROR);
+	if (av_check(av, &input) == ERROR)
 	{
 		ft_putstr_fd("Error\n", 2);
 		lst_clean(&input);
@@ -108,25 +87,33 @@ int main(int ac, char *av[])
 	order = (char *)malloc(sizeof(char));
 	ft_bzero(order, sizeof(char));
 
+//-------------------------------------------------------
+	/* for (int i = 0; i < 8; i++) */
+		/* px(&head, head.cur_a, head.cur_b, NULL); */
+	/* debug_print(&head, 3); */
+	/* wall_check_stack(&head, &order, 5, '2'); */
+	/* examine = next_check_nspot(&head, 5, '2'); */
+	/* wall_check_stack(&head, &order, 5, '0'); */
+	/* examine = next_check_nspot(&head, 5, '0'); */
+	/* px(&head, head.cur_b, head.cur_a, NULL); */
+	/* px(&head, head.cur_b, head.cur_a, NULL); */
+	/* px(&head, head.cur_b, head.cur_a, NULL); */
+//-------------------------------------------------------
+
+
+	debug_print(&head, 3);
 	if (case_check(&head, &order) == ERROR && head.cnt_a > 5)
 		stack_a_to_b(&head, &order, head.cnt_b, head.cnt_a);
-	/* debug_print(&head, 2); */
-	/* if (px(&head, head.cur_a, head.cur_b, &order) == SUCCESS) */
-		/* order_len++; */
+	debug_print(&head, 3);
+	printf("-------------------\n");
+	examine = debug_sort_check(&head);
 	/* stdio_test(&head, &order); */
-	/* px(&head, head.cur_b, head.cur_a, &order); */
-	/* px(&head, head.cur_b, head.cur_a, &order); */
-	/* debug_print(&head, 0); */
-	/* printf("-------------------\n"); */
-	/* examine = debug_sort_check(&head); */
-	/* [> examine = next_check_nspot(&head, 3, '2'); <] */
-	/* cnt = order_print(order); */
-	order_print(order);
-	/* printf("-------------------\n"); */
-	/* if (examine == ERROR) */
-		/* printf("Total : %d || Sort : %s\n", cnt, "KO"); */
-	/* else */
-		/* printf("Total : %d || Sort : %s\n", cnt, "OK"); */
+	cnt = order_print(order);
+	printf("-------------------\n");
+	if (examine == ERROR)
+		printf("Total : %d || Sort : %s\n", cnt, "KO");
+	else
+		printf("Total : %d || Sort : %s\n", cnt, "OK");
 	stack_lstfclean(&head);
 	free(order);
 	return (SUCCESS);
@@ -233,7 +220,7 @@ char stdio_test(t_cursor *head, char **order)
 	buf = (char *)malloc(sizeof(char) * 5);
 	while (1)
 	{
-		debug_print(head, 3);
+		debug_print(head, 1);
 		ft_bzero(buf, sizeof(char) * 5);
 		write(1, "input => ", 9);
 		read(0, buf, 4);
@@ -280,4 +267,20 @@ char stdio_test(t_cursor *head, char **order)
 	}
 	free(buf);
 	return (BIT_ALL);
+}
+
+int debug_sort_check(t_cursor *head)
+{
+	t_stack	*lst;
+
+	if (head->cur_b)
+		return (ERROR);
+	lst = head->cur_a;
+	while (lst->next)
+	{
+		if (lst->idx > lst->next->idx)
+			return (ERROR);
+		lst = lst->next;
+	}
+	return (SUCCESS);
 }

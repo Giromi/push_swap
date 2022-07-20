@@ -6,7 +6,7 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 22:49:31 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/20 17:59:58 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/21 00:20:45 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void stack_go_to_top(t_cursor *head, char **order, int spot, int cnt)
 
 void stack_b_to_a(t_cursor *head, char **order, int offset, int n)
 {
-	int limit = 3;
+	int limit = 5;
 	int pv1;
 	int pv2;
 	t_cnt	count;
@@ -32,17 +32,18 @@ void stack_b_to_a(t_cursor *head, char **order, int offset, int n)
 	pv2 = 2 * (n / 3) + (n % 3 == 2) + offset;
 	if (n <= limit)
 	{
+		debug_print(head, 1);
 		wall_check_stack(head, order, n, '2');
-		/* debug_print(head, 1); */
+		debug_print(head, 1);
 		while (n--)
 			px(head, head->cur_b, head->cur_a, order);
-		/* debug_print(head, 1); */
+		debug_print(head, 1);
 		return ;
 	}
 	else if (n / 3 < limit)
 	{
 		pv2 = n - limit + offset;
-		pv1 = (n - limit) / 2 + (pv2 % 2 != 0) + offset;
+		pv1 = (n - limit) / 2 + ((n - limit) % 2 != 0) + offset;
 	}
 	while (n--)
 	{
@@ -55,22 +56,22 @@ void stack_b_to_a(t_cursor *head, char **order, int offset, int n)
 				rx(head, head->cur_a, order);
 		}
 	}
-	/* debug_print(head, 1); */
+	debug_print(head, 1);
 	stack_go_to_top(head, order, '3', count.rb);
-	/* debug_print(head, 1); */
+	debug_print(head, 1);
 	stack_a_to_b(head, order, pv1, count.pa - count.ra);
-	/* debug_print(head, 1); */
+	debug_print(head, 1);
 	stack_go_to_top(head, order, '1', count.ra);
-	/* debug_print(head, 1); */
+	debug_print(head, 1);
 	stack_a_to_b(head, order, offset, count.ra);
-	/* debug_print(head, 1); */
+	debug_print(head, 1);
 	stack_b_to_a(head, order, offset, count.rb);
-	/* debug_print(head, 1); */
+	debug_print(head, 1);
 }
 
 void	stack_a_to_b(t_cursor *head, char **order, int offset, int n)
 {
-	int limit = 3;
+	int limit = 5;
 	int pv1;
 	int pv2;
 	t_cnt	count;
@@ -78,15 +79,17 @@ void	stack_a_to_b(t_cursor *head, char **order, int offset, int n)
 	ft_bzero(&count, sizeof(t_cnt));
 	pv1 = n / 3 + offset;
 	pv2 = 2 * (n / 3) + (n % 3 == 2) + offset;
-	if (n <= limit)			// < 1 2 3
+	if (n <= limit)			// < 1 2 3 4 5
 	{
+		debug_print(head, 1);
 		wall_check_stack(head, order, n, '0');
+		debug_print(head, 1);
 		return ;
 	}
 	else if (n / 3 < limit)	// < 4 5 6 7 8 9 10 11
 	{
 		pv2 = n - limit + offset;
-		pv1 = (n - limit) / 2 + (pv2 % 2 != 0) + offset;
+		pv1 = (n - limit) / 2 + ((n - limit) % 2 != 0) + offset;
 	}
 	while (n--)
 	{
@@ -103,14 +106,14 @@ void	stack_a_to_b(t_cursor *head, char **order, int offset, int n)
 			}
 		}
 	}
-	/* debug_print(head, 1); */
+	debug_print(head, 1);
 	stack_go_to_top(head, order, '1', count.ra);
 	stack_a_to_b(head, order, pv2, count.ra);
-	/* debug_print(head, 1); */
+	debug_print(head, 1);
 	stack_b_to_a(head, order, pv1, count.pb - count.rb);
-	/* debug_print(head, 1); */
+	debug_print(head, 1);
 	stack_go_to_top(head, order, '3', count.rb);
-	/* debug_print(head, 1); */
+	debug_print(head, 1);
 	stack_b_to_a(head, order, offset, count.rb);
-	/* debug_print(head, 1); */
+	debug_print(head, 1);
 }

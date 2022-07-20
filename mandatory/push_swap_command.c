@@ -6,29 +6,11 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 23:12:59 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/19 23:34:17 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/20 20:24:08 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-/* char	*ft_charjoin(char *s, char c) */
-/* { */
-	/* char	*pt; */
-	/* int		len; */
-
-	/* if (!s || !c) */
-		/* return (NULL); */
-	/* len = ft_strlen(s) + 1; */
-	/* pt = (char *)malloc(sizeof(char) * (len + 1)); */
-	/* if (!pt) */
-		/* return (NULL); */
-	/* pt[len] = '\0'; */
-	/* ft_strlcpy(pt, s, len + 1); */
-	/* pt[len - 1] = c; */
-	/* free(s); */
-	/* return (pt); */
-/* } */
 
 static	char	ft_charjoin_myself(t_cursor *head, char **s, char c)
 {
@@ -82,7 +64,8 @@ char	rx(t_cursor *head, t_stack *top, char **result)
 
 	if (!top || !top->next)
 	{
-		top->spot += (top->spot % 2 == 0);
+		if (top)
+			top->spot += (top->spot % 2 == 0);
 		return ('\0');
 	}
 	top->priv->next = top;
@@ -94,7 +77,6 @@ char	rx(t_cursor *head, t_stack *top, char **result)
 	}
 	else if (top->spot > '1')
 		head->cur_b = top->next;
-	/* top->spot += 2 * (top->spot < '2'); */
 	top->spot += (top->spot % 2 == 0);
 	top->next = NULL;
 	return (ft_charjoin_myself(head, result, bit));
@@ -105,7 +87,11 @@ char	rrx(t_cursor *head, t_stack *top, char **result)
 	char bit;
 
 	if (!top || !top->next)
+	{
+		if (top)
+			top->spot -= (top->spot % 2 != 0);
 		return ('\0');
+	}
 	top->priv->next = top;
 	bit = BIT_RRB;
 	if (top->priv->spot <= '1')
@@ -115,7 +101,6 @@ char	rrx(t_cursor *head, t_stack *top, char **result)
 	}
 	else if (top->priv->spot > '1')
 		head->cur_b = top->priv;
-	/* top->priv->spot -= 2 * (top->priv->spot >= '2'); */
 	top->priv->spot -= (top->priv->spot % 2 != 0);
 	top->priv->priv->next = NULL;
 	return (ft_charjoin_myself(head, result, bit));

@@ -6,7 +6,7 @@
 #    By: minsuki2 <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 18:42:17 by minsuki2          #+#    #+#              #
-#    Updated: 2022/07/20 19:11:22 by minsuki2         ###   ########.fr        #
+#    Updated: 2022/07/20 20:33:56 by minsuki2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ SRCS			=	push_swap.c				\
 					ft_simple_atoi.c		\
 					case_under_five.c		\
 					case_under_five_utils.c	\
-					hard_coding.c			\
+					wall_sorting.c			\
 					quick_sort.c
 			# HAD_FILES 		=	ft_printf.h
 	# BONUS_HAD_FILES =	ft_printf_bonus.h

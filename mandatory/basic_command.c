@@ -6,7 +6,7 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 15:40:13 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/20 13:57:00 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/20 23:59:27 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,3 +51,17 @@ char	sort_swap_b(t_cursor *head, char **order)
 			return (sx(head, head->cur_b, order));
 	return (BIT_INT);
 }
+
+int	next_check(t_stack *now)
+{
+	if (!now)
+		return (ERROR);
+	while (now->next)
+	{
+		if (now->next->tmp_idx - now->tmp_idx != 1)
+			return (ERROR);
+		now = now->next;
+	}
+	return (SUCCESS);
+}
+

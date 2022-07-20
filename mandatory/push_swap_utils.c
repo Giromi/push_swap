@@ -6,7 +6,7 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 19:22:46 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/20 19:25:56 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/20 22:39:59 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -508,6 +508,7 @@ int	order_print(char *result)
 	int old_i;
 	int cnt;
 
+	cnt = ft_strlen(result);
 	cnt = 0;
 	if (!result)
 		return (cnt);
@@ -515,14 +516,14 @@ int	order_print(char *result)
 	while (result[i++])
 	{
 		old_i = i;
-		if (result[i - 1] & (BIT_PA | BIT_PB))
-			write(1, "p", 1);
-		else if ((result[i - 1] | result[i]) == (BIT_SA | BIT_SB) && ++i)
+		if ((result[i - 1] | result[i]) == (BIT_SA | BIT_SB) && ++i)
 			write(1, "ss", 2);
 		else if ((result[i - 1] | result[i]) == (BIT_RA | BIT_RB) && ++i)
 			write(1, "rr", 2);
 		else if ((result[i - 1] | result[i]) == (BIT_RRA | BIT_RRB) && ++i)		//	두개 더하면 - overflow 발생해서는 안됨.
 			write(1, "rrr", 3);													//	=> (char)쓰면 80자 넘어감
+		else if (result[i - 1] & (BIT_PA | BIT_PB))
+			write(1, "p", 1);
 		else if (result[i - 1] & (BIT_SA | BIT_SB))
 			write(1, "s", 1);
 		else if (result[i - 1] & (BIT_RA | BIT_RB))
@@ -537,6 +538,7 @@ int	order_print(char *result)
 	return (cnt);
 }
 
+
 int stack_circle(t_stack **lst)
 {
 	int		max_idx;
@@ -548,8 +550,6 @@ int stack_circle(t_stack **lst)
 	while (tmp)
 	{
 		tmp->tmp_idx = tmp->idx;
-		/* if (delta) */
-			/* *delta[i - 1] = tmp->next->idx - tmp->idx; */
 		if (tmp->idx > max_idx)
 			max_idx = tmp->idx;
 		if (!tmp->next)
