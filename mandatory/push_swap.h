@@ -6,7 +6,7 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 05:56:23 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/21 15:24:28 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/21 15:28:32 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include "ft_printf.h"
 # include "libft.h"
 # define ERROR		-1
 # define SUCCESS	0

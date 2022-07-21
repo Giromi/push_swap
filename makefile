@@ -6,7 +6,7 @@
 #    By: minsuki2 <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 18:42:17 by minsuki2          #+#    #+#              #
-#    Updated: 2022/07/21 15:21:21 by minsuki2         ###   ########.fr        #
+#    Updated: 2022/07/21 15:31:44 by minsuki2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,6 @@ ARFLAGS 		= -rcus
 MAKE_C 			= make -C
 MANDATORY_DIR 	= mandatory/
 BONUS_DIR 		= bonus/
-FTPRINTF_DIR	= ft_printf/
-FTPRINTF		= libftprintf.a
 TARGET_DIR 		= $(MANDATORY_DIR)
 
 LIBFT_DIR 		=	libft/
@@ -46,24 +44,23 @@ HADS			=	$(BONUS_DIR)push_swap_bonus.h
 
 OBJS			=	$(addprefix $(MANDATORY_DIR), $(SRCS:.c=.o))
 
-all: $(FTPRINTF_DIR)$(FTPRINTF) $(NAME)
+all: $(LIBFT_DIR)$(LIBFT) $(NAME)
 
-$(FTPRINTF_DIR)$(FTPRINTF):
-	$(MAKE_C) $(FTPRINTF_DIR)
+$(LIBFT_DIR)$(LIBFT):
+	$(MAKE_C) $(LIBFT_DIR)
 
 $(NAME): $(OBJS)
 	@echo @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-	$(CC) $(CFLAGS)  $^ $(FTPRINTF_DIR)$(FTPRINTF) -o $@
+	$(CC) $(CFLAGS) $^ $(LIBFT_DIR)$(LIBFT) $(INC)$(LIBFT_DIR) -o $@
 	@echo @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 	@echo Push swap Compiled!
 
-%.o: %.c $(HADS)
+%.o: %.c
 	@echo $@ Making...
-	$(CC) $(CFLAGS) $(COMPILE) $< $(INC)$(FTPRINTF_DIR) $(INC)$(LIBFT_DIR) -o $@
+	$(CC) $(CFLAGS) $(COMPILE) $< $(INC)$(LIBFT_DIR) -o $@
 
 clean:
 	$(MAKE_C) $(LIBFT_DIR) clean
-	$(MAKE_C) $(FTPRINTF_DIR) clean
 	@echo
 	@echo ">>>>>>>>>>>>>>>> Delete List <<<<<<<<<<<<<<<<<<<<"
 	@$(RM) $(addprefix $(MANDATORY_DIR), $(SRCS:.c=.o))
@@ -73,7 +70,6 @@ clean:
 fclean: clean
 	@echo ">>>>>>>>>>>>>>>> Delete List <<<<<<<<<<<<<<<<<<<<"
 	@$(RM) $(LIBFT_DIR)$(LIBFT)
-	@$(RM) $(FTPRINTF_DIR)$(FTPRINTF)
 	@$(RM) $(NAME)
 	@echo ">>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<"
 	@echo
