@@ -6,7 +6,7 @@
 #    By: minsuki2 <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 18:42:17 by minsuki2          #+#    #+#              #
-#    Updated: 2022/07/21 15:31:44 by minsuki2         ###   ########.fr        #
+#    Updated: 2022/07/21 15:42:48 by minsuki2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,9 +37,10 @@ SRCS			=	push_swap.c						\
 					wall_sorting.c					\
 					ft_simple_atoi.c
 
+BONUS_SRCS		=	push_swap_bonus.c				\
+
 HADS			=	$(MANDATORY_DIR)push_swap.h
 
-HADS			=	$(BONUS_DIR)push_swap_bonus.h
 
 
 OBJS			=	$(addprefix $(MANDATORY_DIR), $(SRCS:.c=.o))
@@ -78,11 +79,11 @@ re:
 	@make fclean
 	@make all
 
-bonus: $(LIBFT_DIR)$(LIBFT)
+bonus: #$(LIBFT_DIR)$(LIBFT)
 	@$(MAKE) \
-	"TARGET_DIR 	=	$(BONUS_DIR)"												\
-	"OBJS		=	$(addprefix $(BONUS_DIR), $(SRCS:.c=.o))"					\
-	"OBJS		=	$(addprefix $(BONUS_DIR), $(SRCS:.c=.o))"					\
+	"NAME 			=	checker
+	"OBJS			=	$(addprefix $(BONUS_DIR), $(BONUS_SRCS:.c=.o))"		\
+	"HADS			=	$(BONUS_DIR)push_swap_bonus.h"
 	all
 
 .PHONY: all clean fclean re bonus
