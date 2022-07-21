@@ -6,14 +6,14 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 05:56:17 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/21 10:33:37 by minsuki2         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+/*   Updated: 2022/07/21 13:39:56 by minsuki2         ###   ########.fr       */
+/*                                                                            */ /* ************************************************************************** */
 
 #include "push_swap.h"
 
 char	stdio_test(t_cursor *head, char **order);
 int		debug_sort_check(t_cursor *head);
+void	only_exit(void);
 
 static int	check_part(char **av, int *num, char *flag)
 {
@@ -67,6 +67,7 @@ int av_check(char **av, t_stack **input)
 
 int main(int ac, char *av[])
 {
+	atexit(only_exit());
 	/* int	examine; */
 	/* int	cnt; */
 	//@@@@@@@@@@@@@@
@@ -266,6 +267,11 @@ char stdio_test(t_cursor *head, char **order)
 	}
 	free(buf);
 	return (BIT_ALL);
+}
+
+void only_exit(void)
+{
+	system("leaks push_swap");
 }
 
 int debug_sort_check(t_cursor *head)
