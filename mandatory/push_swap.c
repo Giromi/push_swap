@@ -6,7 +6,7 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 05:56:17 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/21 10:11:53 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/21 10:33:37 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ int av_check(char **av, t_stack **input)
 
 int main(int ac, char *av[])
 {
-	int	examine;
-	int	cnt;
+	/* int	examine; */
+	/* int	cnt; */
 	//@@@@@@@@@@@@@@
 	t_cursor	head;
 	t_stack		*input;
@@ -104,14 +104,15 @@ int main(int ac, char *av[])
 		stack_a_to_b(&head, &order, head.cnt_b, head.cnt_a, &flag);
 //	debug_print(&head, 3);
 //	printf("-------------------\n");
-	examine = debug_sort_check(&head);
+	/* examine = debug_sort_check(&head); */
 //	stdio_test(&head, &order);
-	cnt = order_print(order);
-//	printf("-------------------\n");
-//	if (examine == ERROR)
-//		printf("Total : %d || Sort : %s\n", cnt, "KO");
-//	else
-//		printf("Total : %d || Sort : %s\n", cnt, "OK");
+	/* cnt = order_print(order); */
+	order_print(order);
+	/* printf("-------------------\n"); */
+	/* if (examine == ERROR) */
+		/* printf("Total : %d || Sort : %s\n", cnt, "KO"); */
+	/* else */
+		/* printf("Total : %d || Sort : %s\n", cnt, "OK"); */
 	stack_lstfclean(&head);
 	free(order);
 	return (SUCCESS);

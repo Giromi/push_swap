@@ -6,7 +6,7 @@
 #    By: minsuki2 <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 18:42:17 by minsuki2          #+#    #+#              #
-#    Updated: 2022/07/20 20:33:56 by minsuki2         ###   ########.fr        #
+#    Updated: 2022/07/21 10:32:32 by minsuki2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,8 +69,7 @@ clean:
 	$(MAKE_C) $(FTPRINTF_DIR) clean
 	@echo
 	@echo ">>>>>>>>>>>>>>>> Delete List <<<<<<<<<<<<<<<<<<<<"
-	@$(RM) $(MANDATORY_DIR)$(SRCS:.c=.o)
-	@$(RM) $(MANDATORY_DIR)$(SRCS:.c=.o)
+	@$(RM) $(addprefix $(MANDATORY_DIR), $(SRCS:.c=.o))
 	@echo ">>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<"
 	@echo
 
