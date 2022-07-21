@@ -50,6 +50,7 @@ typedef struct s_cursor
 	int	cnt_a;
 	t_stack *cur_b;
 	int	cnt_b;
+	char *order;
 } t_cursor;
 
 typedef struct s_cnt
@@ -87,11 +88,11 @@ int	stack_pushidx(t_stack *_throw, t_stack *_catch);
 char *quick_sort(t_cursor *head, char *order);
 char	sort_rotate_goal(t_cursor *head, char **order, char priv_command);
 
-char	sx(t_cursor *head, t_stack *top, char **result);
-char	rx(t_cursor *head, t_stack *top, char **result);
-char	rrx(t_cursor *head, t_stack *top, char **result);
-char	px(t_cursor *head, t_stack *_throw, t_stack *_catch, char **result);
-void	stack_a_to_b(t_cursor *head, char **order, int offset, int n, int *flag);
+char	sx(t_cursor *head, t_stack *top);
+char	rx(t_cursor *head, t_stack *top);
+char	rrx(t_cursor *head, t_stack *top);
+char	px(t_cursor *head, t_stack *_throw, t_stack *_catch);
+void	stack_a_to_b(t_cursor *head, int offset, int n, int *flag);
 
 // void	pa(t_cursor *head, char *result);
 // void	pb(t_cursor *head, char *result);
@@ -115,15 +116,14 @@ int	next_check(t_stack *now);
 int priv_check(t_stack *now);
 int	priv_check_limit(t_stack *now, t_stack *first, int delta);
 int priv_check_swap(t_stack *now, int swap_cnt);
-int		sort_swap(t_cursor *head, t_stack *top, char **order);
-char	sort_swap_b(t_cursor *head, char **order);
+int sort_swap(t_cursor *head, t_stack *top);
+char	sort_swap_b(t_cursor *head);
 
-int		stack_is_a_rotate(t_cursor *head, char **order, char priv, int n);
-int		stack_is_a_roswap(t_cursor *head, char **order, char priv, int n);
-int		case_check(t_cursor *head, char **order);
-int stack_groupidx(t_stack *cur, int n);
+int	stack_is_a_rotate(t_cursor *head, char priv, int n);
+int	stack_is_a_roswap(t_cursor *head, char priv, int n);
+int	case_check(t_cursor *head);
 
 void	recursive_sort(t_cursor *head, char **order);
-int wall_check_stack(t_cursor *head, char **order, int n, char spot);
+int wall_check_stack(t_cursor *head, int n, char spot);
 #endif
 

@@ -6,17 +6,19 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 19:22:46 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/20 22:39:59 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/21 13:16:27 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	ft_emergency(t_cursor *head, char *order)
+void	stack_lstfclean(t_cursor *head)
 {
-	stack_lstfclean(head);
-	free(order);
-	exit(1);
+	if (!head)
+		return ;
+	lst_clean(&head->cur_a);
+	lst_clean(&head->cur_b);
+	free(head->order);
 }
 
 
@@ -49,17 +51,6 @@ int ft_issp(int c)
 	return (c == ' ');
 }
 
-void full_clean(char **array)
-{
-	int	i;
-
-	i = 0;
-	while (array[i])
-		free(array[i++]);
-	if (array)
-		free(array);
-	printf("Finished full_clean\n");
-}
 
 size_t	ft_strlcat_known(char *dst, size_t dst_len, char const *src,
 		size_t src_len)
@@ -161,55 +152,6 @@ t_stack	*stack_lstlast(t_stack *lst, t_stack *new)
 	return (last);
 }
 
-int stack_pushidx(t_stack *_throw, t_stack *_catch)
-{
-	int criterion_num;
-	t_stack *push;
-
-	criterion_num = _throw->num;
-	_throw->tmp_idx = 0;
-	push = _throw;
-	while (_throw || _catch)
-	{
-		if (_throw && _throw->num > criterion_num)
-			_throw->tmp_idx--;
-		if (_catch && _catch->num > criterion_num)
-			_catch->tmp_idx++;
-		else if(_catch && _catch->num < criterion_num)
-			push->tmp_idx++;
-		if (_throw)
-			_throw = _throw->next;
-		if (_catch)
-			_catch = _catch->next;
-	}
-	return (SUCCESS);
-}
-
-/* int stack_groupidx(t_stack *cur, int n) */
-/* { */
-	/* int		i; */
-	/* int		j; */
-	/* t_stack	*top; */
-
-	/* if (!cur) */
-		/* return (ERROR); */
-	/* i = 0; */
-	/* while (cur->next && i < n - 1) */
-	/* { */
-		/* cur->tmp_idx = 0; */
-		/* top = cur; */
-		/* j = 0; */
-		/* while (top->next && j < n - 1) */
-		/* { */
-			/* if (cur->num > top->num) */
-				/* cur->tmp_idx++; */
-			/* top = top->next; */
-		/* } */
-		/* cur = cur->next; */
-	/* } */
-	/* return (SUCCESS); */
-/* } */
-
 int	stack_lstadd_back(t_stack **lst, t_stack *new)
 {
 	t_stack	*tmp;
@@ -263,13 +205,6 @@ void lst_clean(t_stack **lst)
 	}
 }
 
-void	stack_lstfclean(t_cursor *head)
-{
-	if (!head)
-		return ;
-	lst_clean(&head->cur_a);
-	lst_clean(&head->cur_b);
-}
 
 void stack_cut(t_stack **lst)
 {
@@ -279,173 +214,6 @@ void stack_cut(t_stack **lst)
 		(*lst)->next = NULL;
 	}
 }
-
-/* int	sa(t_cursor *head, char *result) */
-/* { */
-	/* t_stack	*tmp; */
-
-	/* if (!head->cur_a || !head->cur_a->next) */
-		/* return (ERROR); */
-	/* tmp = head->cur_a->next->next; */
-	/* if (head->cur_a->next->next) */
-		/* head->cur_a->next->next->priv = head->cur_a; */
-	/* head->cur_a->next->next = head->cur_a; */
-	/* if (head->cur_a->priv != head->cur_a->next) */
-		/* head->cur_a->next->priv = head->cur_a->priv; */
-	/* head->cur_a->priv = head->cur_a->next; */
-	/* head->cur_a->next = tmp; */
-	/* head->cur_a = head->cur_a->priv; */
-	/* return (ft_charjoin(&result, BIT_SA)); */
-/* } */
-
-/* int	sb(t_cursor *head, char **result) */
-/* { */
-	/* t_stack	*tmp; */
-
-	/* if (!head->cur_b || !head->cur_b->next) */
-		/* return (ERROR); */
-	/* tmp = head->cur_b->next->next; */
-	/* if (head->cur_b->next->next) */
-		/* head->cur_b->next->next->priv = head->cur_b; */
-	/* head->cur_b->next->next = head->cur_b; */
-	/* if (head->cur_b->priv != head->cur_b->next) */
-		/* head->cur_b->next->priv = head->cur_b->priv; */
-	/* head->cur_b->priv = head->cur_b->next; */
-	/* head->cur_b->next = tmp; */
-	/* head->cur_b = head->cur_b->priv; */
-	/* return (ft_charjoin(&result, BIT_SB)); */
-/* } */
-
-
-
-/* int	ss(t_cursor *head, char *result) */
-/* { */
-	/* result = sa(head, result); */
-	/* return (sb(head, result)); */
-/* } */
-
-/* void	pa(t_cursor *head, char *result) */
-/* { */
-	/* t_stack *tmp; */
-
-	/* if (!head->cur_b) */
-		/* return (result); */
-	/* stack_pushidx(head->cur_b, head->cur_a); */
-	/* tmp = head->cur_b; */
-	/* if (head->cur_b->next) */
-	/* { */
-		/* head->cur_b->next->priv = head->cur_b->priv; */
-		/* head->cur_b = head->cur_b->next; */
-	/* } */
-	/* else */
-		/* head->cur_b = NULL;		// if) head->cur_a empty */
-	/* tmp->next = head->cur_a; */
-	/* tmp->priv = tmp; */
-	/* if (head->cur_a) */
-	/* { */
-		/* tmp->priv = head->cur_a->priv; */
-		/* head->cur_a->priv = tmp; */
-	/* } */
-	/* head->cur_a = tmp; */
-	/* head->cnt_a++; */
-	/* head->cnt_b--; */
-	/* return (ft_charjoin(&result, BIT_PA)); */
-/* } */
-
-
-/* void	pb(t_cursor *head, char *result) */
-/* { */
-	/* t_stack *tmp; */
-
-	/* if (!head->cur_a) */
-		/* return (NULL); */
-	/* stack_pushidx(head->cur_a, head->cur_b); */
-	/* tmp = head->cur_a; */
-	/* if (head->cur_a->next) */
-	/* { */
-		/* head->cur_a->next->priv = head->cur_a->priv; */
-		/* head->cur_a = head->cur_a->next; */
-	/* } */
-	/* else */
-		/* head->cur_a = NULL;		// if) head->cur_a empty */
-	/* tmp->next = head->cur_b; */
-	/* tmp->priv = tmp; */
-	/* if (head->cnt_a-- && ++head->cnt_b && head->cur_b) */
-	/* { */
-		/* tmp->priv = head->cur_b->priv; */
-		/* head->cur_b->priv = tmp; */
-	/* } */
-	/* head->cur_b = tmp; */
-	/* head->cur_b->spot = '1'; */
-	/* return (ft_charjoin(result, BIT_PB)); */
-/* } */
-
-
-
-/* vid	ra(t_stack **top, char *result) */
-/* { */
-	/* if (!head->cur_a || !head->cur_a->next) */
-		/* return (NULL); */
-	/* head->cur_a->priv->next = head->cur_a; */
-	/* head->cur_a = head->cur_a->next; */
-	/* head->cur_a->priv->next = NULL; */
-	/* return (ft_charjoin(&result, BIT_RA)); */
-/* } */
-
-
-/* void	ra(t_cursor *head, char **result) */
-/* { */
-	/* if (!head->cur_a || !head->cur_a->next) */
-		/* return (result); */
-	/* head->cur_a->priv->next = head->cur_a; */
-	/* head->cur_a = head->cur_a->next; */
-	/* head->cur_a->priv->next = NULL; */
-	/* return (ft_charjoin(&result, BIT_RB)); */
-/* } */
-
-/* void	rb(t_cursor *head, char **result) */
-/* { */
-	/* if (!head->cur_b || !head->cur_b->next) */
-		/* return (result); */
-	/* head->cur_b->priv->next = head->cur_b; */
-	/* head->cur_b = head->cur_b->next; */
-	/* head->cur_b->priv->next = NULL; */
-	/* ft_charjoin(&result, BIT_RB); */
-/* } */
-
-/* void	rr(t_cursor *head, char **result) */
-/* { */
-	/* ra(head, result); */
-	/* rb(head, result): */
-/* } */
-
-/* void	rra(t_cursor *head, char **result) */
-/* { */
-	/* if (!head->cur_a || head->cur_a->priv == head->cur_a) */
-		/* return (result); */
-	/* head->cur_a->priv->next = head->cur_a; */
-	/* head->cur_a = head->cur_a->priv; */
-	/* head->cur_a->priv->next = NULL; */
-	/* return (ft_charjoin(result, BIT_RRA)); */
-/* } */
-
-
-/* void	rrb(t_cursor *head, char *result) */
-/* { */
-	/* if (!head->cur_b || head->cur_b->priv == head->cur_b) */
-		/* return (result); */
-	/* head->cur_b->priv->next = head->cur_b; */
-	/* head->cur_b = head->cur_b->priv; */
-	/* head->cur_b->priv->next = NULL; */
-	/* return (ft_charjoin(result, BIT_RRB)); */
-/* } */
-
-
-/* void	rrr(t_cursor *head, char **result) */
-/* { */
-	/* rra(head, result); */
-	/* rrb(head, result); */
-/* } */
 
 void whether_a_b(char c)
 {
@@ -460,47 +228,6 @@ void whether_a_b(char c)
 	else if (c & set_b)
 		write(1, "b", 1);
 }
-
-/* int ft_charnstr(const char *str, int *n, char c) */
-/* { */
-	/* int	offset; */
-
-	/* offset = 0; */
-	/* while (n-- && *str) */
-	/* { */
-		/* if (*str ==) */
-
-
-		/* str++; */
-	/* } */
-	/* return (offset); */
-/* } */
-
-/* void	*ft_charundo(char *s) */
-/* { */
-	/* char	*pt; */
-	/* int		size; */
-
-	/* if (!s) */
-		/* return (NULL); */
-	/* size = ft_strlen(s) - 1; */
-	/* if (size < 0) */
-		/* return (NULL); */
-	/* pt = (char *)malloc(sizeof(char) * size); */
-	/* pt[size - 1] = '\0'; */
-	/* if (!pt) */
-		/* return (NULL); */
-	/* ft_strlcpy(pt, s, size); */
-	/* free(s); */
-	/* return (pt); */
-/* } */
-
-/* int	order_compress(char *result) */
-/* { */
-	/* ra  */
-
-
-/* } */
 
 int	order_print(char *result)
 {
@@ -569,19 +296,13 @@ void	stack_headset(t_cursor *head, t_stack *first)
 	head->cur_b = NULL;
 	head->cnt_a = stack_circle(&first);
 	head->cnt_b = 0;
+	head->order = (char *)malloc(sizeof(char));
+	if (!head->order)
+	{
+		stack_lstfclean(head);
+		exit(1);
+	}
+	ft_bzero(head->order, sizeof(char));
 }
 
-char	ft_counteract(char *str, int *len, char add)
-{
-	if (((str[*len - 2] | add) == (BIT_RRA | BIT_RA))
-			|| ((str[*len - 2] | add) == (BIT_RRB | BIT_RB))
-			|| ((str[*len - 2] | add) == (char)(BIT_PA | BIT_PB))
-			|| (str[*len - 2] == BIT_SA && add == BIT_SA)
-			|| (str[*len - 2] == BIT_SB && add == BIT_SB))
-	{
-		(*len) -= 2;
-		return (BIT_INT);
-	}
-	return (add);
-}
 

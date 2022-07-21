@@ -10,7 +10,7 @@
 
 #include "push_swap.h"
 
-int	stack_is_a_roswap(t_cursor *head, char **order, char priv, int n)
+int	stack_is_a_roswap(t_cursor *head, char priv, int n)
 {
 	int	i;
 
@@ -18,15 +18,15 @@ int	stack_is_a_roswap(t_cursor *head, char **order, char priv, int n)
 	if ((priv != BIT_RA)
 		&& !priv_check_swap(repeat_priv(head->cur_a, 2 + n), head->cnt_a - 3))
 		while (i++ < n + 1)
-			rrx(head, head->cur_a, order);
+			rrx(head, head->cur_a);
 	else if ((priv != BIT_RRA)
 		&& !priv_check_swap(repeat_next(head->cur_a, n), head->cnt_a - 3))
 		while (i++ < n + 1)
-			rx(head, head->cur_a, order);
+			rx(head, head->cur_a);
 	return (priv_check_swap(head->cur_a->priv, head->cnt_a - 3));
 }
 
-int	stack_is_a_rotate(t_cursor *head, char **order, char priv, int n)
+int	stack_is_a_rotate(t_cursor *head, char priv, int n)
 {
 	int		i;
 
@@ -34,11 +34,11 @@ int	stack_is_a_rotate(t_cursor *head, char **order, char priv, int n)
 	if ((priv != BIT_RA)
 		&& priv_check(repeat_priv(head->cur_a, 2 + n)) == SUCCESS)
 		while (i++ < n + 1)
-			rrx(head, head->cur_a, order);
+			rrx(head, head->cur_a);
 	else if ((priv != BIT_RRA)
 		&& priv_check(repeat_next(head->cur_a, n)) == SUCCESS)
 		while (i++ < n + 1)
-			rx(head, head->cur_a, order);
+			rx(head, head->cur_a);
 	return (priv_check(head->cur_a->priv));
 }
 

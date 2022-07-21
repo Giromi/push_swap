@@ -6,7 +6,7 @@
 #    By: minsuki2 <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 18:42:17 by minsuki2          #+#    #+#              #
-#    Updated: 2022/07/21 10:32:32 by minsuki2         ###   ########.fr        #
+#    Updated: 2022/07/21 13:29:44 by minsuki2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,14 +28,15 @@ LIBFT_DIR 		=	libft/
 LIBFT 			=	libft.a
 NAME	 		=	push_swap
 
-SRCS			=	push_swap.c				\
-					push_swap_utils.c		\
-					push_swap_command.c		\
-					basic_command.c			\
-					ft_simple_atoi.c		\
-					case_under_five.c		\
-					case_under_five_utils.c	\
-					wall_sorting.c			\
+SRCS			=	push_swap.c						\
+					push_swap_utils.c				\
+					push_swap_command.c				\
+					push_swap_command_utils.c		\
+					basic_command.c					\
+					ft_simple_atoi.c				\
+					case_under_five.c				\
+					case_under_five_utils.c			\
+					wall_sorting.c					\
 					quick_sort.c
 			# HAD_FILES 		=	ft_printf.h
 	# BONUS_HAD_FILES =	ft_printf_bonus.h
@@ -55,10 +56,10 @@ $(FTPRINTF_DIR)$(FTPRINTF):
 
 $(NAME): $(OBJS)
 	@echo @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-	$(CC) -g -fsanitize=address $(CFLAGS) $(addprefix $(MANDATORY_DIR), $(SRCS)) $(FTPRINTF_DIR)$(FTPRINTF) $(INC)$(FTPRINTF_DIR) $(INC)$(LIBFT_DIR) -o $@
+	$(CC) $(CFLAGS)  $^ $(FTPRINTF_DIR)$(FTPRINTF) -o $@
 	@echo @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 	@echo Push swap Compiled!
-# $(CC) $(CFLAGS)  $^ $(FTPRINTF_DIR)$(FTPRINTF) -o $@
+#$(CC) -g -fsanitize=address $(CFLAGS) $(addprefix $(MANDATORY_DIR), $(SRCS)) $(FTPRINTF_DIR)$(FTPRINTF) $(INC)$(FTPRINTF_DIR) $(INC)$(LIBFT_DIR) -o $@
 
 %.o: %.c #$(HADS)
 	@echo $@ Making...

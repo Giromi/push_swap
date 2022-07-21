@@ -6,7 +6,7 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 15:40:13 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/20 23:59:27 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/21 13:24:48 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,29 +26,29 @@ t_stack	*repeat_priv(t_stack *top, int n)
 	return (top);
 }
 
-int sort_swap(t_cursor *head, t_stack *top, char **order)
+int sort_swap(t_cursor *head, t_stack *top)
 {
 	if (!top || !top->next)
 		return (ERROR);
 	if (top->tmp_idx - top->next->tmp_idx == 1)
 	{
-		sx(head, top, order);
+		sx(head, top);
 		return (SUCCESS);
 	}
 	if (((top->tmp_idx == 0 && top->next->tmp_idx == head->cnt_a - 1)
 			&& next_check(top->next->next) == SUCCESS))
 	{
-		sx(head, top, order);
+		sx(head, top);
 		return (SUCCESS);
 	}
 	return (ERROR);
 }
 
-char	sort_swap_b(t_cursor *head, char **order)
+char	sort_swap_b(t_cursor *head)
 {
 	if (head->cur_b && head->cur_b->next)
 		if (head->cur_b->next->tmp_idx > head->cur_b->tmp_idx)
-			return (sx(head, head->cur_b, order));
+			return (sx(head, head->cur_b));
 	return (BIT_INT);
 }
 

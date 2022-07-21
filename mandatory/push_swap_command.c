@@ -6,35 +6,60 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 23:12:59 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/20 20:24:08 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/21 13:13:36 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static	char	ft_charjoin_myself(t_cursor *head, char **s, char c)
+/* static	char	ft_charjoin_myself(t_cursor *head, char **s, char c) */
+/* { */
+	/* char	*pt; */
+	/* int		len; */
+
+	/* if (!s || !c) */
+		/* return (BIT_INT); */
+	/* len = ft_strlen(*s) + 1; */
+	/* if (len > 1) */
+		/* c = ft_counteract(*s, &len, c); */
+	/* pt = malloc(sizeof(char) * (len + 1)); */
+	/* if (!pt) */
+		/* ft_emergency(head, *s); */
+	/* ft_strlcpy(pt, *s, len + 1); */
+	/* if (c != BIT_INT && len > 0) */
+		/* pt[len - 1] = c; */
+	/* pt[len] = '\0'; */
+	/* free(*s); */
+	/* *s = pt; */
+	/* return (c); */
+/* } */
+
+static	char	ft_charjoin_myself(t_cursor *head, char c)
 {
 	char	*pt;
 	int		len;
 
-	if (!s || !c)
+	if (!head->order || !c)
 		return (BIT_INT);
-	len = ft_strlen(*s) + 1;
+	len = ft_strlen(head->order) + 1;
 	if (len > 1)
-		c = ft_counteract(*s, &len, c);
+		c = ft_counteract(head->order, &len, c);
 	pt = malloc(sizeof(char) * (len + 1));
 	if (!pt)
-		ft_emergency(head, *s);
-	ft_strlcpy(pt, *s, len + 1);
+	{
+		stack_lstfclean(head);
+		exit(1);
+	}
+	ft_strlcpy(pt, head->order, len + 1);
 	if (c != BIT_INT && len > 0)
 		pt[len - 1] = c;
 	pt[len] = '\0';
-	free(*s);
-	*s = pt;
+	free(head->order);
+	head->order = pt;
 	return (c);
 }
 
-char	sx(t_cursor *head, t_stack *top, char **result)
+char	sx(t_cursor *head, t_stack *top)
 {
 	int		backup_int;
 	char	backup_char;
@@ -54,11 +79,11 @@ char	sx(t_cursor *head, t_stack *top, char **result)
 	top->next->tmp_idx = top->tmp_idx;
 	top->tmp_idx = backup_int;
 	if (top->spot > '1')
-		return (ft_charjoin_myself(head, result, BIT_SB));
-	return (ft_charjoin_myself(head, result, BIT_SA));
+		return (ft_charjoin_myself(head, BIT_SB));
+	return (ft_charjoin_myself(head, BIT_SA));
 }
 
-char	rx(t_cursor *head, t_stack *top, char **result)
+char	rx(t_cursor *head, t_stack *top)
 {
 	char bit;
 
@@ -79,10 +104,10 @@ char	rx(t_cursor *head, t_stack *top, char **result)
 		head->cur_b = top->next;
 	top->spot += (top->spot % 2 == 0);
 	top->next = NULL;
-	return (ft_charjoin_myself(head, result, bit));
+	return (ft_charjoin_myself(head, bit));
 }
 
-char	rrx(t_cursor *head, t_stack *top, char **result)
+char	rrx(t_cursor *head, t_stack *top)
 {
 	char bit;
 
@@ -103,10 +128,10 @@ char	rrx(t_cursor *head, t_stack *top, char **result)
 		head->cur_b = top->priv;
 	top->priv->spot -= (top->priv->spot % 2 != 0);
 	top->priv->priv->next = NULL;
-	return (ft_charjoin_myself(head, result, bit));
+	return (ft_charjoin_myself(head, bit));
 }
 
-char	px(t_cursor *head, t_stack *_throw, t_stack *_catch, char **result)
+char	px(t_cursor *head, t_stack *_throw, t_stack *_catch)
 {
 	if (!_throw || stack_pushidx(_throw, _catch))
 		return ('\0');
@@ -129,8 +154,8 @@ char	px(t_cursor *head, t_stack *_throw, t_stack *_catch, char **result)
 	if ((_throw->spot <= '1') && head->cnt_a-- && ++head->cnt_b)
 	{
 		_throw->spot = '2';
-		return (ft_charjoin_myself(head, result, BIT_PB));
+		return (ft_charjoin_myself(head, BIT_PB));
 	}
 	_throw->spot = '0';
-	return (ft_charjoin_myself(head, result, BIT_PA));
+	return (ft_charjoin_myself(head, BIT_PA));
 }
