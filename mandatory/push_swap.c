@@ -6,13 +6,14 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 05:56:17 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/21 13:29:52 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/21 13:37:32 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 void debug_print(t_cursor *head, int choice);
+void only_exit(void);
 
 static int	check_part(char **av, int *num, char *flag)
 {
@@ -62,6 +63,11 @@ int av_check(char **av, t_stack **input)
 		}
 	}
 	return (SUCCESS);
+}
+
+void only_exit(void)
+{
+	system("leaks push_swap");
 }
 
 int main(int ac, char *av[])
