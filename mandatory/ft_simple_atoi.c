@@ -6,7 +6,7 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 08:17:04 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/08 22:51:21 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/21 14:55:08 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	ft_simple_atoi(const char *str)
 	{
 		c = str[i] - '0';
 		if ((num > (over_value / 10)) || ((num == (over_value / 10))
-					&& (c > (int)(over_value % 10))))
+				&& (c > (int)(over_value % 10))))
 			return (over_value + sign);
 		num = num * 10 + c;
 		i++;

@@ -6,31 +6,11 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 14:39:35 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/21 14:46:32 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/21 14:54:40 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-int	next_check_nspot(t_cursor *head, int n, char spot)
-{
-	t_stack *now;
-
-	now = head->cur_a;
-	if (spot == '2')
-		now = head->cur_b;
-	if (!now)
-		return (ERROR);
-	while (now->next && n-- - 1)
-	{
-		if (spot == '0' && now->next->idx - now->idx != 1)
-			return (ERROR);
-		if (spot == '2' && now->idx - now->next->idx != 1)
-			return (ERROR);
-		now = now->next;
-	}
-	return (SUCCESS);
-}
 
 int	next_check(t_stack *now)
 {
@@ -77,4 +57,24 @@ int	priv_check_swap(t_stack *now, int swap_cnt)
 		now = now->priv;
 	}
 	return (ERROR);
+}
+
+int	next_check_nspot(t_cursor *head, int n, char spot)
+{
+	t_stack	*now;
+
+	now = head->cur_a;
+	if (spot == '2')
+		now = head->cur_b;
+	if (!now)
+		return (ERROR);
+	while (now->next && n-- - 1)
+	{
+		if (spot == '0' && now->next->idx - now->idx != 1)
+			return (ERROR);
+		if (spot == '2' && now->idx - now->next->idx != 1)
+			return (ERROR);
+		now = now->next;
+	}
+	return (SUCCESS);
 }

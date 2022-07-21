@@ -6,13 +6,13 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 23:08:24 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/21 14:48:51 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/21 15:17:53 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	stack_is_a_roswap(t_cursor *head, char priv, int n)
+static int	stack_is_a_roswap(t_cursor *head, char priv, int n)
 {
 	int	i;
 
@@ -28,7 +28,7 @@ int	stack_is_a_roswap(t_cursor *head, char priv, int n)
 	return (priv_check_swap(head->cur_a->priv, head->cnt_a - 3));
 }
 
-int	stack_is_a_rotate(t_cursor *head, char priv, int n)
+static int	stack_is_a_rotate(t_cursor *head, char priv, int n)
 {
 	int		i;
 
@@ -76,8 +76,7 @@ static int	sort_try_method_four(t_cursor *head)
 	if (head->cur_a->tmp_idx != 0 || head->cur_a->next->tmp_idx != 3)
 	{
 		rx(head, head->cur_a);
-		if (sort_rotate_roswap(head, BIT_RA) == SUCCESS)
-			return (SUCCESS);
+		if (sort_rotate_roswap(head, BIT_RA) == SUCCESS) return (SUCCESS);
 		rrx(head, head->cur_a);
 	}
 	rrx(head, head->cur_a);

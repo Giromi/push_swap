@@ -3,15 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */ /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 19:22:46 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/21 14:17:37 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/21 14:54:01 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include "../libft/libft.h"
 
 char	*ft_strchr_null(const char *s, int c)
 {

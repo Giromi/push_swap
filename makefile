@@ -6,7 +6,7 @@
 #    By: minsuki2 <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 18:42:17 by minsuki2          #+#    #+#              #
-#    Updated: 2022/07/21 14:51:42 by minsuki2         ###   ########.fr        #
+#    Updated: 2022/07/21 15:21:21 by minsuki2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,25 +29,22 @@ LIBFT 			=	libft.a
 NAME	 		=	push_swap
 
 SRCS			=	push_swap.c						\
+					quick_sort.c					\
 					push_swap_utils.c				\
+					push_swap_utils2.c				\
 					stack_lst_utils.c				\
 					check_utils.c					\
 					push_swap_command.c				\
-					ft_simple_atoi.c				\
 					case_under_five.c				\
-					case_under_five_utils.c			\
 					wall_sorting.c					\
-					quick_sort.c
-			# HAD_FILES 		=	ft_printf.h
-	# BONUS_HAD_FILES =	ft_printf_bonus.h
+					ft_simple_atoi.c
 
-# MINITALK_HADS = $(HAD_FILES))
+HADS			=	$(MANDATORY_DIR)push_swap.h
 
-MINITALK_OBJS_BONUS = $(addprefix $(BONUS_DIR), $(BONUS_SRC_FILES:.c=.o))
-# MINITALK_HADS_BONUS = $(addprefix $(BONUS_DIR), $(BONUS_HAD_FILES))
+HADS			=	$(BONUS_DIR)push_swap_bonus.h
 
-# OBJS = $(MINITALK_OBJS)
-OBJS		=	$(addprefix $(MANDATORY_DIR), $(SRCS:.c=.o))
+
+OBJS			=	$(addprefix $(MANDATORY_DIR), $(SRCS:.c=.o))
 
 all: $(FTPRINTF_DIR)$(FTPRINTF) $(NAME)
 
@@ -59,9 +56,8 @@ $(NAME): $(OBJS)
 	$(CC) $(CFLAGS)  $^ $(FTPRINTF_DIR)$(FTPRINTF) -o $@
 	@echo @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 	@echo Push swap Compiled!
-#$(CC) -g -fsanitize=address $(CFLAGS) $(addprefix $(MANDATORY_DIR), $(SRCS)) $(FTPRINTF_DIR)$(FTPRINTF) $(INC)$(FTPRINTF_DIR) $(INC)$(LIBFT_DIR) -o $@
 
-%.o: %.c #$(HADS)
+%.o: %.c $(HADS)
 	@echo $@ Making...
 	$(CC) $(CFLAGS) $(COMPILE) $< $(INC)$(FTPRINTF_DIR) $(INC)$(LIBFT_DIR) -o $@
 
@@ -81,7 +77,6 @@ fclean: clean
 	@$(RM) $(NAME)
 	@echo ">>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<"
 	@echo
-# @$(RM) $(NAME)
 
 re:
 	@make fclean
@@ -90,6 +85,7 @@ re:
 bonus: $(LIBFT_DIR)$(LIBFT)
 	@$(MAKE) \
 	"TARGET_DIR 	=	$(BONUS_DIR)"												\
+	"OBJS		=	$(addprefix $(BONUS_DIR), $(SRCS:.c=.o))"					\
 	"OBJS		=	$(addprefix $(BONUS_DIR), $(SRCS:.c=.o))"					\
 	all
 

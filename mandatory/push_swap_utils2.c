@@ -1,16 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   case_under_five_utils.c                            :+:      :+:    :+:   */
+/*   push_swap_utils2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 15:53:16 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/21 14:50:31 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/21 15:16:07 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+t_stack	*repeat_next(t_stack *top, int n)
+{
+	while (top && n--)
+		top = top->next;
+	return (top);
+}
+
+t_stack	*repeat_priv(t_stack *top, int n)
+{
+	while (top && n--)
+		top = top->priv;
+	return (top);
+}
 
 char	sort_push_method(t_cursor *head)
 {
@@ -55,16 +69,24 @@ int sort_swap(t_cursor *head, t_stack *top)
 	return (ERROR);
 }
 
-t_stack	*repeat_next(t_stack *top, int n)
+int where_idx_n(t_cursor *head, int n, char spot)
 {
-	while (top && n--)
-		top = top->next;
-	return (top);
-}
+	int		find_idx;
+	t_stack *tmp;
 
-t_stack	*repeat_priv(t_stack *top, int n)
-{
-	while (top && n--)
-		top = top->priv;
-	return (top);
+	tmp = head->cur_a;
+	if (spot == '2')
+		tmp = head->cur_b;
+	if (!tmp)
+		return (ERROR);
+	find_idx = tmp->idx;
+	while (tmp && n--)
+	{
+		if (spot == '0' && tmp->idx < find_idx)
+			find_idx = tmp->idx;
+		else if (spot == '2' && tmp->idx > find_idx)
+			find_idx = tmp->idx;
+		tmp = tmp->next;
+	}
+	return (find_idx);
 }
