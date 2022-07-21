@@ -6,7 +6,7 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 22:49:31 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/21 11:25:22 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/21 11:28:52 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	stack_a_to_b(t_cursor *head, char **order, int offset, int n, int *flag)
 	t_cnt	count;
 
 	ft_bzero(&count, sizeof(t_cnt));
-	if (n <= 4 && !wall_check_stack(head, order, n, '0'))
+	if (n <= 4 && (head)!wall_check_stack(head, order, n, '0'))
 		return ;
 	pivot_setting(&pv1, &pv2, offset, n);
 	while (n-- > 0)
