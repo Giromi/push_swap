@@ -6,7 +6,7 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 05:56:17 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/21 01:14:56 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/21 10:11:53 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,15 @@ int av_check(char **av, t_stack **input)
 	return (SUCCESS);
 }
 
-
 int main(int ac, char *av[])
 {
+	int	examine;
+	int	cnt;
+	//@@@@@@@@@@@@@@
 	t_cursor	head;
 	t_stack		*input;
 	char		*order;
-	int	examine;
-	int	cnt;
+	int	flag;
 
 	input = NULL;
 	if (ac < 2)
@@ -88,32 +89,29 @@ int main(int ac, char *av[])
 	ft_bzero(order, sizeof(char));
 
 //-------------------------------------------------------
-	/* for (int i = 0; i < 8; i++) */
-		/* px(&head, head.cur_a, head.cur_b, NULL); */
-	debug_print(&head, 3);
-	/* wall_check_stack(&head, &order, 5, '2'); */
-	/* examine = next_check_nspot(&head, 5, '2'); */
-	wall_check_stack(&head, &order, 3, '0');
-	examine = next_check_nspot(&head, 3, '0');
-	/* px(&head, head.cur_b, head.cur_a, NULL); */
-	/* px(&head, head.cur_b, head.cur_a, NULL); */
-	/* px(&head, head.cur_b, head.cur_a, NULL); */
-	debug_print(&head, 3);
+//	for (int i = 0; i < 7; i++)
+//		px(&head, head.cur_a, head.cur_b, NULL);
+//	debug_print(&head, 3);
+//	wall_check_stack(&head, &order, 4, '2');
+//	examine = next_check_nspot(&head, 4, '2');
+//	wall_check_stack(&head, &order, 5, '0');
+//	examine = next_check_nspot(&head, 5, '0');
 //-------------------------------------------------------
 
 
-	/* if (case_check(&head, &order) == ERROR && head.cnt_a > 5) */
-		/* stack_a_to_b(&head, &order, head.cnt_b, head.cnt_a); */
-	/* debug_print(&head, 3); */
-	printf("-------------------\n");
-	/* examine = debug_sort_check(&head); */
-	/* stdio_test(&head, &order); */
+	flag = 0;
+	if (case_check(&head, &order) == ERROR && head.cnt_a > 5)
+		stack_a_to_b(&head, &order, head.cnt_b, head.cnt_a, &flag);
+//	debug_print(&head, 3);
+//	printf("-------------------\n");
+	examine = debug_sort_check(&head);
+//	stdio_test(&head, &order);
 	cnt = order_print(order);
-	printf("-------------------\n");
-	if (examine == ERROR)
-		printf("Total : %d || Sort : %s\n", cnt, "KO");
-	else
-		printf("Total : %d || Sort : %s\n", cnt, "OK");
+//	printf("-------------------\n");
+//	if (examine == ERROR)
+//		printf("Total : %d || Sort : %s\n", cnt, "KO");
+//	else
+//		printf("Total : %d || Sort : %s\n", cnt, "OK");
 	stack_lstfclean(&head);
 	free(order);
 	return (SUCCESS);

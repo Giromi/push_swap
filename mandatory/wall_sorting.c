@@ -6,7 +6,7 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 20:04:46 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/21 01:31:09 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/21 09:57:55 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int where_idx_n(t_cursor *head, int n, char spot)
 	find_idx = tmp->idx;
 	while (tmp && n--)
 	{
-		if (spot == '2' && tmp->idx < find_idx)
+		if (spot == '0' && tmp->idx < find_idx)
 			find_idx = tmp->idx;
-		else if (spot == '0' && tmp->idx > find_idx)
+		else if (spot == '2' && tmp->idx > find_idx)
 			find_idx = tmp->idx;
 		tmp = tmp->next;
 	}
@@ -101,39 +101,6 @@ void wall_a_sort_four(t_cursor *head, char **order, char spot)
 	px(head, head->cur_b, head->cur_a, order);
 }
 
-int wall_a_sort_four2(t_cursor *head, char **order, char spot)
-{
-	int	i;
-	int	find_idx;
-
-	i = 0;
-	find_idx = where_idx_n(head, 4, '2');
-	if (repeat_next(head->cur_a, 3)->idx == find_idx)
-		return (wall_sort_three(head, order, spot));
-	if (repeat_next(head->cur_a, 2)->idx == find_idx)
-	{
-		px(head, head->cur_a, head->cur_b, order);
-		px(head, head->cur_a, head->cur_b, order);
-		wall_sort_two(head, order, '0');
-		wall_sort_two(head, order, '2');
-		px(head, head->cur_b, head->cur_a, order);
-		px(head, head->cur_b, head->cur_a, order);
-		return (wall_sort_three(head, order, spot));
-	}
-	while (head->cur_a->idx != find_idx && ++i)
-		px(head, head->cur_a, head->cur_b, order);
-	while (i--)
-		rrx(head, head->cur_a, order);
-	wall_sort_two(head, order, spot);
-	if (find_idx != ERROR)
-		wall_sort_three(head, order, spot);
-	else
-		px(head, head->cur_b, head->cur_a, order);
-	px(head, head->cur_b, head->cur_a, order);
-	return (SUCCESS);
-}
-
-
 void wall_b_sort_four(t_cursor *head, char **order, char spot)
 {
 	int	i;
@@ -150,8 +117,6 @@ void wall_b_sort_four(t_cursor *head, char **order, char spot)
 		if (head->cur_b->idx == find_idx - 1)
 		{
 			px(head, head->cur_b, head->cur_a, order);
-			/* if (head->cur_b->idx < find_idx + 4) */
-				/* wall_sort_two(head, order, spot); */
 			find_idx = ERROR;
 		}
 	}
@@ -159,7 +124,10 @@ void wall_b_sort_four(t_cursor *head, char **order, char spot)
 	if (find_idx != ERROR)
 		wall_sort_three(head, order, spot);
 	else
+	{
+		//wall_sort_two(head, order, '2');
 		px(head, head->cur_a, head->cur_b, order);
+	}
 	px(head, head->cur_a, head->cur_b, order);
 }
 
@@ -261,3 +229,4 @@ int wall_check_stack(t_cursor *head, char **order, int n, char spot)
 	}
 	return (SUCCESS);
 }
+

@@ -91,7 +91,7 @@ char	sx(t_cursor *head, t_stack *top, char **result);
 char	rx(t_cursor *head, t_stack *top, char **result);
 char	rrx(t_cursor *head, t_stack *top, char **result);
 char	px(t_cursor *head, t_stack *_throw, t_stack *_catch, char **result);
-void	stack_a_to_b(t_cursor *head, char **order, int offset, int n);
+void	stack_a_to_b(t_cursor *head, char **order, int offset, int n, int *flag);
 
 // void	pa(t_cursor *head, char *result);
 // void	pb(t_cursor *head, char *result);
