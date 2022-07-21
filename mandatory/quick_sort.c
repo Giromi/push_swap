@@ -6,7 +6,7 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 22:49:31 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/21 11:28:52 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/21 12:51:24 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,15 @@ void stack_go_to_top(t_cursor *head, char **order, int spot, int cnt)
 
 void pivot_setting(int *pv1, int *pv2, int offset, int n)
 {
+	int	limit;
+
+	limit = 5;
 	*pv1 = n / 3 + offset;
 	*pv2 = 2 * (n / 3) + (n % 3 == 2) + offset;
-	if (n / 3 < 4)
+	if (n / 3 < limit)
 	{
-		*pv2 = n - 4 + offset;
-		*pv1 = (n - 4) / 2 + ((n - 4) % 2 != 0) + offset;
+		*pv2 = n - limit + offset;
+		*pv1 = (n - limit) / 2 + ((n - limit) % 2 != 0) + offset;
 	}
 }
 
@@ -39,7 +42,7 @@ void stack_b_to_a(t_cursor *head, char **order, int offset, int n, int *flag)
 
 	*flag = 1;
 	ft_bzero(&count, sizeof(t_cnt));
-	if (n <= 4 && !wall_check_stack(head, order, n, '2'))
+	if (n <= 5 && !wall_check_stack(head, order, n, '2'))
 		while (n--)
 			px(head, head->cur_b, head->cur_a, order);
 	pivot_setting(&pv1, &pv2, offset, n);
@@ -67,7 +70,7 @@ void	stack_a_to_b(t_cursor *head, char **order, int offset, int n, int *flag)
 	t_cnt	count;
 
 	ft_bzero(&count, sizeof(t_cnt));
-	if (n <= 4 && (head)!wall_check_stack(head, order, n, '0'))
+	if (n <= 5 && !wall_check_stack(head, order, n, '0'))
 		return ;
 	pivot_setting(&pv1, &pv2, offset, n);
 	while (n-- > 0)
