@@ -6,7 +6,7 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 05:56:17 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/21 13:41:05 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/21 13:43:01 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ int main(int ac, char *av[])
 		stack_a_to_b(&head, head.cnt_b, head.cnt_a, &flag);
 	order_print(head.order);
 	stack_lstfclean(&head);
-	system("leaks push_swap");
 	return (SUCCESS);
 }
 
