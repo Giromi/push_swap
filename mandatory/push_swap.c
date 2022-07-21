@@ -6,14 +6,13 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 05:56:17 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/21 13:37:32 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/21 13:41:05 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 void debug_print(t_cursor *head, int choice);
-void only_exit(void);
 
 static int	check_part(char **av, int *num, char *flag)
 {
@@ -65,10 +64,6 @@ int av_check(char **av, t_stack **input)
 	return (SUCCESS);
 }
 
-void only_exit(void)
-{
-	system("leaks push_swap");
-}
 
 int main(int ac, char *av[])
 {
@@ -86,7 +81,7 @@ int main(int ac, char *av[])
 		return (ERROR);
 	}
 	stack_headset(&head, input);
-	debug_print(&head, 1);
+	/* debug_print(&head, 1); */
 	flag = 0;
 	if (case_check(&head) == ERROR && head.cnt_a > 5)
 		stack_a_to_b(&head, head.cnt_b, head.cnt_a, &flag);
@@ -165,4 +160,3 @@ void debug_print(t_cursor *head, int choice)
 	ft_printf("----------BOT----------\n");
 	ft_printf("   (%d)\t\t  (%d)  \n\n", head->cnt_a, head->cnt_b);
 }
-	
