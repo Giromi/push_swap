@@ -60,70 +60,46 @@ typedef struct s_cnt
 	int ra;
 	int rb;
 } t_cnt;
+void	stack_a_to_b(t_cursor *head, int offset, int n, int *flag);
 
-void	ft_emergency(t_cursor *head, char *order);
-size_t	ft_strlen(const char *s);
-int		ft_isspace(int);
-void	*ft_charundo(char *s);
-int		ft_isminus(int c);
-int		ft_issp(int c);
-void	full_clean(char **array);
-int		stack_circle(t_stack **lst);
-int		stack_lstadd_back(t_stack **lst, t_stack *new);
+char	*ft_strchr_null(const char *s, int c);
+void	stack_head_set(t_cursor *head, t_stack *first);
+char	ft_counteract(char *str, int *len, char add);
+int	stack_pushidx(t_stack *_throw, t_stack *_catch);
+
 t_stack	*stack_lstnew(int num);
 t_stack	*stack_lstlast(t_stack *lst, t_stack *new);
-void	lst_clean(t_stack **lst);
+int		stack_lstadd_back(t_stack **lst, t_stack *new);
 void	stack_lstfclean(t_cursor *head);
-char	*ft_strchr_null(const char *s, int c);
+void	lst_clean(t_stack **lst);
 
-size_t	ft_strlcat_known(char *dst, size_t dst_len, char const *src,
-		size_t src_len);
-size_t	ft_strlcpy_known(char *dst, char const *src, size_t len
-		, size_t dstsize);
-char	*ft_strjoin_addsp(char const *s1, char const *s2);
-int		order_print(char *result);
 int		ft_simple_atoi(const char *str);
-void	stack_headset(t_cursor *head, t_stack *first);
-int	stack_pushidx(t_stack *_throw, t_stack *_catch);
 char *quick_sort(t_cursor *head, char *order);
 char	sort_rotate_goal(t_cursor *head, char **order, char priv_command);
 
-char	sx(t_cursor *head, t_stack *top);
-char	rx(t_cursor *head, t_stack *top);
-char	rrx(t_cursor *head, t_stack *top);
-char	px(t_cursor *head, t_stack *_throw, t_stack *_catch);
-void	stack_a_to_b(t_cursor *head, int offset, int n, int *flag);
-
-// void	pa(t_cursor *head, char *result);
-// void	pb(t_cursor *head, char *result);
-// void	sa(t_cursor *head, char *result);
-// void	sb(t_cursor *head, char *result);
-// void	ss(t_cursor *head, char *result);
-// void	ra(t_cursor *head, char *result);
-// void	rb(t_cursor *head, char *result);
-// void	rr(t_cursor *head, char *result);
-// void	rra(t_cursor *head, char *result);
-// void	rrb(t_cursor *head, char *result);
-// void	rrr(t_cursor *head, char *result);
 int debug_sort_check(t_cursor *head);
-void debug_print(t_cursor *head, int choice);
-char	ft_counteract(char *str, int *len, char add);
 
 t_stack	*repeat_next(t_stack *top, int n);
 t_stack	*repeat_priv(t_stack *top, int n);
-int	next_check_nspot(t_cursor *head, int n, char spot);
 int	next_check(t_stack *now);
 int priv_check(t_stack *now);
-int	priv_check_limit(t_stack *now, t_stack *first, int delta);
+int	next_check_nspot(t_cursor *head, int n, char spot);
 int priv_check_swap(t_stack *now, int swap_cnt);
-int sort_swap(t_cursor *head, t_stack *top);
-char	sort_swap_b(t_cursor *head);
+
+char	sort_push_method(t_cursor *head);
+int		sort_swap(t_cursor *head, t_stack *top);
 
 int	stack_is_a_rotate(t_cursor *head, char priv, int n);
 int	stack_is_a_roswap(t_cursor *head, char priv, int n);
 int	case_check(t_cursor *head);
 
-void	recursive_sort(t_cursor *head, char **order);
+int	wall_sort_two(t_cursor *head, char spot);
 int wall_check_stack(t_cursor *head, int n, char spot);
+
+
+char	sx(t_cursor *head, t_stack *top);
+char	rx(t_cursor *head, t_stack *top);
+char	rrx(t_cursor *head, t_stack *top);
+char	px(t_cursor *head, t_stack *_throw, t_stack *_catch);
 #endif
 

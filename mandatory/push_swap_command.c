@@ -6,33 +6,11 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 23:12:59 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/21 13:13:36 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/21 14:13:36 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-/* static	char	ft_charjoin_myself(t_cursor *head, char **s, char c) */
-/* { */
-	/* char	*pt; */
-	/* int		len; */
-
-	/* if (!s || !c) */
-		/* return (BIT_INT); */
-	/* len = ft_strlen(*s) + 1; */
-	/* if (len > 1) */
-		/* c = ft_counteract(*s, &len, c); */
-	/* pt = malloc(sizeof(char) * (len + 1)); */
-	/* if (!pt) */
-		/* ft_emergency(head, *s); */
-	/* ft_strlcpy(pt, *s, len + 1); */
-	/* if (c != BIT_INT && len > 0) */
-		/* pt[len - 1] = c; */
-	/* pt[len] = '\0'; */
-	/* free(*s); */
-	/* *s = pt; */
-	/* return (c); */
-/* } */
 
 static	char	ft_charjoin_myself(t_cursor *head, char c)
 {
@@ -85,7 +63,7 @@ char	sx(t_cursor *head, t_stack *top)
 
 char	rx(t_cursor *head, t_stack *top)
 {
-	char bit;
+	char	bit;
 
 	if (!top || !top->next)
 	{
@@ -109,7 +87,7 @@ char	rx(t_cursor *head, t_stack *top)
 
 char	rrx(t_cursor *head, t_stack *top)
 {
-	char bit;
+	char	bit;
 
 	if (!top || !top->next)
 	{

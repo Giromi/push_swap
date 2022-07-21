@@ -6,11 +6,43 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 23:08:24 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/21 13:23:13 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/21 14:48:51 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+int	stack_is_a_roswap(t_cursor *head, char priv, int n)
+{
+	int	i;
+
+	i = 0;
+	if ((priv != BIT_RA)
+		&& !priv_check_swap(repeat_priv(head->cur_a, 2 + n), head->cnt_a - 3))
+		while (i++ < n + 1)
+			rrx(head, head->cur_a);
+	else if ((priv != BIT_RRA)
+		&& !priv_check_swap(repeat_next(head->cur_a, n), head->cnt_a - 3))
+		while (i++ < n + 1)
+			rx(head, head->cur_a);
+	return (priv_check_swap(head->cur_a->priv, head->cnt_a - 3));
+}
+
+int	stack_is_a_rotate(t_cursor *head, char priv, int n)
+{
+	int		i;
+
+	i = 0;
+	if ((priv != BIT_RA)
+		&& priv_check(repeat_priv(head->cur_a, 2 + n)) == SUCCESS)
+		while (i++ < n + 1)
+			rrx(head, head->cur_a);
+	else if ((priv != BIT_RRA)
+		&& priv_check(repeat_next(head->cur_a, n)) == SUCCESS)
+		while (i++ < n + 1)
+			rx(head, head->cur_a);
+	return (priv_check(head->cur_a->priv));
+}
 
 static int	sort_rotate_roswap(t_cursor *head, char priv_cm)
 {
@@ -21,7 +53,7 @@ static int	sort_rotate_roswap(t_cursor *head, char priv_cm)
 	if (priv_cm != BIT_SA && sort_swap(head, head->cur_a) == SUCCESS)
 	{
 		priv_cm = BIT_SA;
-		sort_swap_b(head);
+		wall_sort_two(head, '2');
 	}
 	n = 0;
 	while (n < head->cnt_a / 2 && check == ERROR)
@@ -62,31 +94,6 @@ static int	sort_try_method_four(t_cursor *head)
 		rrx(head, head->cur_a);
 	}
 	return (ERROR);
-}
-
-static char	sort_push_method(t_cursor *head)
-{
-	int	i;
-	int	j;
-	int	check;
-
-	i = 0;
-	j = 0;
-	while (repeat_next(head->cur_a, i)->tmp_idx > 1)
-		i++;
-	while (repeat_priv(head->cur_a, j)->tmp_idx > 1)
-		j++;
-	if (i <= j)
-		while (i--)
-			rx(head, head->cur_a);
-	else if (i > j)
-		while (j--)
-			rrx(head, head->cur_a);
-	px(head, head->cur_a, head->cur_b);
-	check = case_check(head);
-	px(head, head->cur_b, head->cur_a);
-	sort_swap(head, head->cur_a);
-	return (check);
 }
 
 int	case_check(t_cursor *head)

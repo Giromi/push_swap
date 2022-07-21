@@ -6,13 +6,13 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 22:49:31 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/21 13:20:16 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/21 13:44:46 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void stack_go_to_top(t_cursor *head, int spot, int cnt)
+void	stack_go_to_top(t_cursor *head, int spot, int cnt)
 {
 	while (spot == '1' && cnt--)
 		rrx(head, head->cur_a);
@@ -20,7 +20,7 @@ void stack_go_to_top(t_cursor *head, int spot, int cnt)
 		rrx(head, head->cur_b);
 }
 
-void pivot_setting(int *pv1, int *pv2, int offset, int n)
+void	pivot_setting(int *pv1, int *pv2, int offset, int n)
 {
 	int	limit;
 
@@ -34,10 +34,10 @@ void pivot_setting(int *pv1, int *pv2, int offset, int n)
 	}
 }
 
-void stack_b_to_a(t_cursor *head, int offset, int n, int *flag)
+void	stack_b_to_a(t_cursor *head, int offset, int n, int *flag)
 {
-	int pv1;
-	int pv2;
+	int		pv1;
+	int		pv2;
 	t_cnt	count;
 
 	*flag = 1;
@@ -65,8 +65,8 @@ void stack_b_to_a(t_cursor *head, int offset, int n, int *flag)
 
 void	stack_a_to_b(t_cursor *head, int offset, int n, int *flag)
 {
-	int pv1;
-	int pv2;
+	int		pv1;
+	int		pv2;
 	t_cnt	count;
 
 	ft_bzero(&count, sizeof(t_cnt));

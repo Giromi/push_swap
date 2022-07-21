@@ -6,7 +6,7 @@
 #    By: minsuki2 <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 18:42:17 by minsuki2          #+#    #+#              #
-#    Updated: 2022/07/21 13:29:44 by minsuki2         ###   ########.fr        #
+#    Updated: 2022/07/21 14:51:42 by minsuki2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,9 +30,9 @@ NAME	 		=	push_swap
 
 SRCS			=	push_swap.c						\
 					push_swap_utils.c				\
+					stack_lst_utils.c				\
+					check_utils.c					\
 					push_swap_command.c				\
-					push_swap_command_utils.c		\
-					basic_command.c					\
 					ft_simple_atoi.c				\
 					case_under_five.c				\
 					case_under_five_utils.c			\

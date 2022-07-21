@@ -6,7 +6,7 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 20:04:46 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/21 13:21:10 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/21 14:44:08 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,79 +131,6 @@ void wall_b_sort_four(t_cursor *head, char spot)
 	px(head, head->cur_a, head->cur_b);
 }
 
-void wall_a_sort_five(t_cursor *head, char spot)
-{
-	int	i;
-	int	find_idx;
-
-	i = 0;
-	find_idx = where_idx_n(head, 5, spot);
-	while (head->cur_a->idx != find_idx && ++i)
-		rx(head, head->cur_a);
-	px(head, head->cur_a, head->cur_b);
-	while (i--)
-	{
-		rrx(head, head->cur_a);
-		if (head->cur_a->idx == find_idx + 1)
-		{
-			px(head, head->cur_a, head->cur_b);
-			find_idx = ERROR;
-		}
-	}
-	wall_sort_three(head, spot);
-	if (find_idx != ERROR)
-		wall_a_sort_four(head, spot);
-	else
-		px(head, head->cur_b, head->cur_a);
-	px(head, head->cur_b, head->cur_a);
-}
-
-void wall_b_sort_five(t_cursor *head, char spot)
-{
-	int	i;
-	int	find_idx;
-
-	i = 0;
-	find_idx = where_idx_n(head, 5, spot);
-	while (head->cur_b->idx != find_idx && ++i)
-		rx(head, head->cur_b);
-	px(head, head->cur_b, head->cur_a);
-	while (i--)
-	{
-		rrx(head, head->cur_b);
-		if (head->cur_b->idx == find_idx - 1)
-		{
-			px(head, head->cur_b, head->cur_a);
-			find_idx = ERROR;
-		}
-	}
-	wall_sort_three(head, spot);
-	if (find_idx != ERROR)
-		wall_b_sort_four(head, spot);
-	else
-		px(head, head->cur_a, head->cur_b);
-	px(head, head->cur_a, head->cur_b);
-}
-
-int	next_check_nspot(t_cursor *head, int n, char spot)
-{
-	t_stack *now;
-
-	now = head->cur_a;
-	if (spot == '2')
-		now = head->cur_b;
-	if (!now)
-		return (ERROR);
-	while (now->next && n-- - 1)
-	{
-		if (spot == '0' && now->next->idx - now->idx != 1)
-			return (ERROR);
-		if (spot == '2' && now->idx - now->next->idx != 1)
-			return (ERROR);
-		now = now->next;
-	}
-	return (SUCCESS);
-}
 
 int wall_check_stack(t_cursor *head, int n, char spot)
 {

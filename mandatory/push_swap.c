@@ -6,13 +6,11 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 05:56:17 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/21 13:43:01 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/21 14:10:42 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-void debug_print(t_cursor *head, int choice);
 
 static int	check_part(char **av, int *num, char *flag)
 {
@@ -35,7 +33,7 @@ static int	check_part(char **av, int *num, char *flag)
 	return (SUCCESS);
 }
 
-int av_check(char **av, t_stack **input)
+static int	av_check(char **av, t_stack **input)
 {
 	int		num;
 	char	flag;
@@ -46,10 +44,10 @@ int av_check(char **av, t_stack **input)
 		flag = '\0';
 		while (1)
 		{
-			while (ft_issp(**av))
+			while (**av == ' ')
 				(*av)++;
 			if (flag && !**av)
-				break;
+				break ;
 			if ((!flag && !**av) || check_part(av, &num, &flag) == ERROR)
 				return (ERROR);
 			new = stack_lstnew(num);
@@ -64,12 +62,53 @@ int av_check(char **av, t_stack **input)
 	return (SUCCESS);
 }
 
+static void	whether_a_b(char c)
+{
+	char	set_a;
+	char	set_b;
 
-int main(int ac, char *av[])
+	set_a = (char)(BIT_PA | BIT_SA | BIT_RA | BIT_RRA);
+	set_b = (char)(BIT_PB | BIT_SB | BIT_RB | BIT_RRB);
+	if (c & set_a)
+		write(1, "a", 1);
+	else if (c & set_b)
+		write(1, "b", 1);
+}
+
+static void	print_order(char *result)
+{
+	int	i;
+	int	old_i;
+
+	i = 0;
+	while (result[i++])
+	{
+		old_i = i;
+		if ((result[i - 1] | result[i]) == (BIT_SA | BIT_SB) && ++i)
+			ft_putstr_fd("ss", 1);
+		else if ((result[i - 1] | result[i]) == (BIT_RA | BIT_RB) && ++i)
+			ft_putstr_fd("rr", 1);
+		else if ((result[i - 1] | result[i]) == (BIT_RRA | BIT_RRB) && ++i)
+			ft_putstr_fd("rrr", 1);
+		else if (result[i - 1] & (BIT_PA | BIT_PB))
+			ft_putstr_fd("p", 1);
+		else if (result[i - 1] & (BIT_SA | BIT_SB))
+			ft_putstr_fd("s", 1);
+		else if (result[i - 1] & (BIT_RA | BIT_RB))
+			ft_putstr_fd("r", 1);
+		else if (result[i - 1] & (BIT_RRA | BIT_RRB))
+			ft_putstr_fd("rr", 1);
+		if (old_i == i)
+			whether_a_b(result[i - 1]);
+		ft_putchar_fd('\n', 1);
+	}
+}
+
+int	main(int ac, char *av[])
 {
 	t_cursor	head;
 	t_stack		*input;
-	int	flag;
+	int			flag;
 
 	input = NULL;
 	if (ac < 2)
@@ -80,82 +119,12 @@ int main(int ac, char *av[])
 		lst_clean(&input);
 		return (ERROR);
 	}
-	stack_headset(&head, input);
-	/* debug_print(&head, 1); */
+	stack_head_set(&head, input);
 	flag = 0;
 	if (case_check(&head) == ERROR && head.cnt_a > 5)
 		stack_a_to_b(&head, head.cnt_b, head.cnt_a, &flag);
-	order_print(head.order);
+	if (head.order)
+		print_order(head.order);
 	stack_lstfclean(&head);
 	return (SUCCESS);
-}
-
-void debug_print(t_cursor *head, int choice)
-{
-	t_stack		*stack_a;
-	t_stack		*stack_b;
-
-	write(1, "[COMMAND]\n", 10);
-	/* if (cur_order) */
-		/* simple_order_print(*cur_order); */
-	write(1, "-----------------------", 23);
-	ft_printf("\nstack A\t\tstack B\n");
-	ft_printf("----------TOP----------\n");
-	stack_a = head->cur_a;
-	stack_b = head->cur_b;
-	while (stack_a || stack_b)
-	{
-		if (!choice)
-		{
-			if (stack_a && stack_b)
-				ft_printf("    %d\t\t  %d    \n", stack_a->idx, stack_b->idx);
-			else if (stack_a && !stack_b)
-				ft_printf("    %d\t\t     \n", stack_a->idx);
-			else if (!stack_a && stack_b)
-				ft_printf("      \t\t  %d    \n", stack_b->idx);
-			else
-				ft_printf("    \t\t    \n");
-		}
-		else if (choice == 1)
-		{
-			if (stack_a && stack_b)
-				ft_printf("    %d|'%c'| \t  %d|'%c'|    \n", stack_a->idx, stack_a->spot, stack_b->idx, stack_b->spot);
-			else if (stack_a && !stack_b)
-				ft_printf("    %d|'%c'|\t     \n", stack_a->idx, stack_a->spot);
-			else if (!stack_a && stack_b)
-				ft_printf("    \t\t  %d|'%c'|    \n", stack_b->idx, stack_b->spot);
-			else
-				ft_printf("    \t\t    \n");
-		}
-		else if (choice == 3)
-		{
-			if (stack_a && stack_b)
-				ft_printf("    %d|[%d]| \t  %d|[%d]|    \n", stack_a->idx, stack_a->tmp_idx, stack_b->idx, stack_b->tmp_idx);
-			else if (stack_a && !stack_b)
-				ft_printf("    %d|[%d]|\t     \n", stack_a->idx, stack_a->tmp_idx);
-			else if (!stack_a && stack_b)
-				ft_printf("    \t\t  %d|[%d]|    \n", stack_b->idx, stack_b->tmp_idx);
-			else
-				ft_printf("    \t\t    \n");
-		}
-		else
-		{
-			if (stack_a && stack_b)
-				ft_printf("    %d(%d)\t  %d(%d)    \n", stack_a->num, stack_a->idx, stack_b->num, stack_b->idx);
-			else if (stack_a && !stack_b)
-				ft_printf("    %d(%d)\t     \n", stack_a->num, stack_a->idx);
-			else if (!stack_a && stack_b)
-				ft_printf("    \t\t  %d(%d)    \n", stack_b->num, stack_b->idx);
-			else
-				ft_printf("    \t\t    \n");
-		}
-		if (stack_a)
-			stack_a = stack_a->next;
-		if (stack_b)
-			stack_b = stack_b->next;
-	}
-	stack_a = head->cur_a;
-	stack_b = head->cur_b;
-	ft_printf("----------BOT----------\n");
-	ft_printf("   (%d)\t\t  (%d)  \n\n", head->cnt_a, head->cnt_b);
 }
