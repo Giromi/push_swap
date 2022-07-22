@@ -1,5 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
+/* ************************************************************************** */ /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   push_swap_command_bonus.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
@@ -32,7 +31,7 @@ int	sx(t_stack *top)
 	char	backup_char;
 
 	if (!top || !top->next)
-		return (ERROR);
+		return (SUCCESS);
 	backup_int = top->next->idx;
 	top->next->idx = top->idx;
 	top->idx = backup_int;
@@ -51,7 +50,7 @@ int	rx(t_cursor *head, t_stack *top)
 	{
 		if (top)
 			top->spot += (top->spot % 2 == 0);
-		return (ERROR);
+		return (SUCCESS);
 	}
 	top->priv->next = top;
 	if (top->spot <= '1' )
@@ -69,7 +68,7 @@ int	rrx(t_cursor *head, t_stack *top)
 	{
 		if (top)
 			top->spot -= (top->spot % 2 != 0);
-		return (ERROR);
+		return (SUCCESS);
 	}
 	top->priv->next = top;
 	if (top->priv->spot <= '1')
@@ -84,7 +83,7 @@ int	rrx(t_cursor *head, t_stack *top)
 int	px(t_cursor *head, t_stack *_throw, t_stack *_catch)
 {
 	if (!_throw)
-		return (ERROR);
+		return (SUCCESS);
 	if (_throw->next)
 		_throw->next->priv = _throw->priv;
 	_throw->priv = _throw;

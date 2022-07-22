@@ -6,7 +6,7 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 05:56:17 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/22 20:55:45 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/22 21:50:25 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,7 @@ static int	av_check(char **av, t_stack **input)
 			new = stack_lstnew(num);
 			if (stack_lstadd_back(input, new) == ERROR)
 			{
-				if (new)
-					free(new);
+				if (new) free(new);
 				return (ERROR);
 			}
 		}
@@ -93,6 +92,7 @@ int	main(int ac, char *av[])
 		return (ERROR);
 	}
 	stack_head_set(&head, input);
+	debug_print(&head, 1);
 	if (stdio_input(&head) == ERROR)
 		ft_putstr_fd("Error\n", 2);
 	else
@@ -102,6 +102,7 @@ int	main(int ac, char *av[])
 		else
 			ft_putstr_fd("KO\n", 1);
 	}
+	debug_print(&head, 1);
 	stack_lstfclean(&head);
 	return (SUCCESS);
 }
