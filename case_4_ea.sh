@@ -27,8 +27,7 @@ my_pushswap()
 	./push_swap "$i"
 	echo ---------------------------
 	printf "Total : $s\n" $(./push_swap "$i" | wc -l)
-	printf "Sort : (real)%s == (my)%s\n" $(./push_swap "$i" | ./checker_Mac $i) $(./push_swap "$i" | ./checker $i)
-	
+	printf "Sort : %s == %s\n" $(./push_swap "$i" | ./checker_Mac $i) $(./push_swap "$i" | ./checker $i)
 }
 # for i in "${ARG0[@]}"
 # do
