@@ -6,7 +6,7 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 15:53:16 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/21 15:16:07 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/22 21:14:43 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	sort_push_method(t_cursor *head)
 	return (check);
 }
 
-int sort_swap(t_cursor *head, t_stack *top)
+int	sort_swap(t_cursor *head, t_stack *top)
 {
 	if (!top || !top->next)
 		return (ERROR);
@@ -69,10 +69,10 @@ int sort_swap(t_cursor *head, t_stack *top)
 	return (ERROR);
 }
 
-int where_idx_n(t_cursor *head, int n, char spot)
+int	where_idx_n(t_cursor *head, int n, char spot)
 {
 	int		find_idx;
-	t_stack *tmp;
+	t_stack	*tmp;
 
 	tmp = head->cur_a;
 	if (spot == '2')
