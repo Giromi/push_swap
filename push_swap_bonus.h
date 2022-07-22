@@ -6,15 +6,12 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 15:54:20 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/22 19:39:14 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/22 21:08:07 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #ifndef PUSH_SWAP_BONUS_H
 # define PUSH_SWAP_BONUS_H
-# include <stdlib.h>
-# include <unistd.h>
 # include "libft.h"
 # define ERROR		-1
 # define SUCCESS	0
@@ -52,20 +49,17 @@ typedef struct s_cursor
 	char			*order;
 }	t_cursor;
 
-int		debug_sort_check(t_cursor *head);
 char	*ft_strchr_null(const char *s, int c);
 void	stack_head_set(t_cursor *head, t_stack *first);
-t_stack	*repeat_next(t_stack *top, int n);
-t_stack	*repeat_priv(t_stack *top, int n);
 t_stack	*stack_lstnew(int num);
 t_stack	*stack_lstlast(t_stack *lst, t_stack *new);
+int		stdio_input(t_cursor *head);
 int		stack_lstadd_back(t_stack **lst, t_stack *new);
-void	stack_lstfclean(t_cursor *head);
 void	lst_clean(t_stack **lst);
-int		sx(t_cursor *head, t_stack *top);
+void	stack_lstfclean(t_cursor *head);
+int		sx(t_stack *top);
 int		rx(t_cursor *head, t_stack *top);
 int		rrx(t_cursor *head, t_stack *top);
 int		px(t_cursor *head, t_stack *_throw, t_stack *_catch);
-int		next_check(t_stack *now); int		priv_check(t_stack *now);
 int		ft_simple_atoi(const char *str);
 #endif

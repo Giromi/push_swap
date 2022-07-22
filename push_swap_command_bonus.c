@@ -6,42 +6,30 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 23:12:59 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/22 19:38:45 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/22 21:03:43 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap_bonus.h"
 
-/* static	char	ft_charjoin_myself(t_cursor *head, char c) */
-/* { */
-	/* char	*pt; */
-	/* int		len; */
+char	*ft_strchr_null(const char *s, int c)
+{
+	size_t	i;
 
-	/* if (!head->order || !c) */
-		/* return (BIT_INT); */
-	/* len = ft_strlen(head->order) + 1; */
-	/* if (len > 1) */
-		/* c = ft_counteract(head->order, &len, c); */
-	/* pt = malloc(sizeof(char) * (len + 1)); */
-	/* if (!pt) */
-	/* { */
-		/* stack_lstfclean(head); */
-		/* exit(1); */
-	/* } */
-	/* ft_strlcpy(pt, head->order, len + 1); */
-	/* if (c != BIT_INT && len > 0) */
-		/* pt[len - 1] = c; */
-	/* pt[len] = '\0'; */
-	/* free(head->order); */
-	/* head->order = pt; */
-	/* return (c); */
-/* } */
+	i = 0;
+	while (*(s + i))
+	{
+		if (*(s + i) == (char)c)
+			return ((char *)s + i);
+		i++;
+	}
+	return ((char *)s + i);
+}
 
-int	sx(t_cursor *head, t_stack *top)
+int	sx(t_stack *top)
 {
 	int		backup_int;
 	char	backup_char;
-
 	if (!top || !top->next)
 		return (ERROR);
 	backup_int = top->next->idx;
@@ -58,8 +46,6 @@ int	sx(t_cursor *head, t_stack *top)
 
 int	rx(t_cursor *head, t_stack *top)
 {
-	char	bit;
-
 	if (!top || !top->next)
 	{
 		if (top)
@@ -67,12 +53,8 @@ int	rx(t_cursor *head, t_stack *top)
 		return (ERROR);
 	}
 	top->priv->next = top;
-	bit = BIT_RB;
 	if (top->spot <= '1' )
-	{
-		bit = BIT_RA;
 		head->cur_a = top->next;
-	}
 	else if (top->spot > '1')
 		head->cur_b = top->next;
 	top->spot += (top->spot % 2 == 0);
@@ -82,8 +64,6 @@ int	rx(t_cursor *head, t_stack *top)
 
 int	rrx(t_cursor *head, t_stack *top)
 {
-	char	bit;
-
 	if (!top || !top->next)
 	{
 		if (top)
@@ -91,12 +71,8 @@ int	rrx(t_cursor *head, t_stack *top)
 		return (ERROR);
 	}
 	top->priv->next = top;
-	bit = BIT_RRB;
 	if (top->priv->spot <= '1')
-	{
-		bit = BIT_RRA;
 		head->cur_a = top->priv;
-	}
 	else if (top->priv->spot > '1')
 		head->cur_b = top->priv;
 	top->priv->spot -= (top->priv->spot % 2 != 0);

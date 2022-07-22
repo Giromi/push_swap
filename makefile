@@ -1,12 +1,12 @@
-	# **************************************************************************** #
-	#                                                                              #
+# **************************************************************************** #
+#                                                                              #
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: minsuki2 <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 18:42:17 by minsuki2          #+#    #+#              #
-#    Updated: 2022/07/22 19:45:39 by minsuki2         ###   ########.fr        #
+#    Updated: 2022/07/22 21:10:03 by minsuki2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ AR 				= ar
 ARFLAGS 		= -rcus
 MAKE_C 			= make -C
 MANDATORY_DIR 	= ./
-BONUS_DIR 		= bonus/
+BONUS_DIR 		= ./
 TARGET_DIR 		= $(MANDATORY_DIR)
 
 LIBFT_DIR 		=	libft/
@@ -40,14 +40,11 @@ SRCS			=	push_swap.c						\
 
 BONUS_SRCS		=	push_swap_bonus.c				\
 					push_swap_utils_bonus.c			\
+					push_swap_command_bonus.c		\
 					stack_lst_utils_bonus.c			\
 					ft_simple_atoi_bonus.c
 
-
 HADS			=	$(MANDATORY_DIR)push_swap.h
-
-
-
 OBJS			=	$(addprefix $(MANDATORY_DIR), $(SRCS:.c=.o))
 
 all: $(LIBFT_DIR)$(LIBFT) $(NAME)
@@ -60,7 +57,6 @@ $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $^ $(LIBFT_DIR)$(LIBFT) $(INC)$(LIBFT_DIR) -o $@
 	@echo @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 	@echo Push swap Compiled!
-#$(CC) -g -fsanitize=address $(CFLAGS) $(addprefix $(BONUS_DIR), $(BONUS_SRCS)) $(LIBFT_DIR)$(LIBFT) $(INC)$(LIBFT_DIR) -o $@
 
 %.o: %.c
 	@echo $@ Making...
@@ -71,7 +67,7 @@ clean:
 	@echo
 	@echo ">>>>>>>>>>>>>>>> Delete List <<<<<<<<<<<<<<<<<<<<"
 	@$(RM) $(addprefix $(MANDATORY_DIR), $(SRCS:.c=.o))
-	@$(RM) $(addprefix $(BONUS_DIR), $(SRCS:.c=.o))
+	@$(RM) $(addprefix $(BONUS_DIR), $(BONUS_SRCS:.c=.o))
 	@echo ">>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<"
 	@echo
 
@@ -83,11 +79,15 @@ fclean: clean
 	@echo ">>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<"
 	@echo
 
-bonus: $(LIBFT_DIR)$(LIBFT)#$(LIBFT_DIR)$(LIBFT)
+re:
+	@make fclean
+	@make all
+
+bonus: $(LIBFT_DIR)$(LIBFT)
 	@$(MAKE) \
-	"NAME 			=	$(BONUS_NAME)"											\
-	"OBJS			=	$(addprefix $(BONUS_DIR), $(BONUS_SRCS:.c=.o))"		\
-	"HADS			=	$(BONUS_DIR)push_swap_bonus.h"						\
+	"NAME 			=	$(BONUS_NAME)"									\
+	"OBJS			=	$(addprefix $(BONUS_DIR), $(BONUS_SRCS:.c=.o))"	\
+	"HADS			=	$(BONUS_DIR)push_swap_bonus.h"					\
 	all
 
 .PHONY: all clean fclean re bonus

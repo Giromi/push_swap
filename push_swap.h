@@ -6,14 +6,12 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 05:56:23 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/21 15:54:10 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/22 21:01:37 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
-# include <stdlib.h>
-# include <unistd.h>
 # include "libft.h"
 # define ERROR		-1
 # define SUCCESS	0
