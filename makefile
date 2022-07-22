@@ -6,7 +6,7 @@
 #    By: minsuki2 <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 18:42:17 by minsuki2          #+#    #+#              #
-#    Updated: 2022/07/21 15:42:48 by minsuki2         ###   ########.fr        #
+#    Updated: 2022/07/22 19:45:39 by minsuki2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,13 +18,14 @@ RM 				= rm -vf
 AR 				= ar
 ARFLAGS 		= -rcus
 MAKE_C 			= make -C
-MANDATORY_DIR 	= mandatory/
+MANDATORY_DIR 	= ./
 BONUS_DIR 		= bonus/
 TARGET_DIR 		= $(MANDATORY_DIR)
 
 LIBFT_DIR 		=	libft/
 LIBFT 			=	libft.a
 NAME	 		=	push_swap
+BONUS_NAME		=	checker
 
 SRCS			=	push_swap.c						\
 					quick_sort.c					\
@@ -38,6 +39,10 @@ SRCS			=	push_swap.c						\
 					ft_simple_atoi.c
 
 BONUS_SRCS		=	push_swap_bonus.c				\
+					push_swap_utils_bonus.c			\
+					stack_lst_utils_bonus.c			\
+					ft_simple_atoi_bonus.c
+
 
 HADS			=	$(MANDATORY_DIR)push_swap.h
 
@@ -55,6 +60,7 @@ $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $^ $(LIBFT_DIR)$(LIBFT) $(INC)$(LIBFT_DIR) -o $@
 	@echo @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 	@echo Push swap Compiled!
+#$(CC) -g -fsanitize=address $(CFLAGS) $(addprefix $(BONUS_DIR), $(BONUS_SRCS)) $(LIBFT_DIR)$(LIBFT) $(INC)$(LIBFT_DIR) -o $@
 
 %.o: %.c
 	@echo $@ Making...
@@ -65,6 +71,7 @@ clean:
 	@echo
 	@echo ">>>>>>>>>>>>>>>> Delete List <<<<<<<<<<<<<<<<<<<<"
 	@$(RM) $(addprefix $(MANDATORY_DIR), $(SRCS:.c=.o))
+	@$(RM) $(addprefix $(BONUS_DIR), $(SRCS:.c=.o))
 	@echo ">>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<"
 	@echo
 
@@ -72,18 +79,15 @@ fclean: clean
 	@echo ">>>>>>>>>>>>>>>> Delete List <<<<<<<<<<<<<<<<<<<<"
 	@$(RM) $(LIBFT_DIR)$(LIBFT)
 	@$(RM) $(NAME)
+	@$(RM) $(BONUS_NAME)
 	@echo ">>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<"
 	@echo
 
-re:
-	@make fclean
-	@make all
-
-bonus: #$(LIBFT_DIR)$(LIBFT)
+bonus: $(LIBFT_DIR)$(LIBFT)#$(LIBFT_DIR)$(LIBFT)
 	@$(MAKE) \
-	"NAME 			=	checker
+	"NAME 			=	$(BONUS_NAME)"											\
 	"OBJS			=	$(addprefix $(BONUS_DIR), $(BONUS_SRCS:.c=.o))"		\
-	"HADS			=	$(BONUS_DIR)push_swap_bonus.h"
+	"HADS			=	$(BONUS_DIR)push_swap_bonus.h"						\
 	all
 
 .PHONY: all clean fclean re bonus

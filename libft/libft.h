@@ -6,7 +6,7 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 17:56:40 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/01/26 13:17:28 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/22 18:20:22 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <limits.h>
+# include <fcntl.h>
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 4
+# endif
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
@@ -54,7 +58,7 @@ void	ft_putnbr_fd(int n, int fd);
 
 typedef struct s_list
 {
-	void			*content;
+	char			*content;
 	struct s_list	*next;
 }	t_list;
 t_list	*ft_lstnew(void *content);
@@ -66,4 +70,11 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+char	*get_next_line(int fd);
+char	*ft_strlen_chr_init(const char *s, int c, size_t *len, int init);
+size_t	ft_strlcat_dstlen(char *dst, size_t dst_len, char const *src,
+			size_t dstsize);
+char	*ft_strdup(const char *s1);
+t_list	*ft_lstadd_back_last(t_list **lst, t_list *new);
+t_list	*ft_lstnew_str(char *content);
 #endif

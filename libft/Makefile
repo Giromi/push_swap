@@ -6,14 +6,14 @@
 #    By: minsuki2 <minsuki2@student.42seoul.>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/24 18:14:29 by minsuki2          #+#    #+#              #
-#    Updated: 2022/06/26 16:46:11 by minsuki2         ###   ########.fr        #
+#    Updated: 2022/07/22 18:49:04 by minsuki2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 NAME = ./libft.a
-ARFLAGS = rcus 
+ARFLAGS = rcus
 INCLUDES = ./libft.h
 INC = -I./
 RM = rm -rvf
@@ -42,17 +42,19 @@ SRCS_FILES = ft_isalpha.c	\
 			 ft_calloc.c	\
 			 ft_strdup.c
 
-SRCS_FILES += ft_putchar_fd.c	\
-			  ft_putstr_fd.c	\
-			  ft_putnbr_fd.c	\
-			  ft_putendl_fd.c	\
-			  ft_substr.c		\
-			  ft_strjoin.c		\
-			  ft_strtrim.c		\
-			  ft_itoa.c			\
-			  ft_split.c		\
-			  ft_striteri.c		\
-			  ft_strmapi.c
+SRCS_FILES +=	ft_putchar_fd.c		\
+			 	ft_putstr_fd.c		\
+			 	ft_putnbr_fd.c		\
+			 	ft_putendl_fd.c		\
+			 	ft_substr.c			\
+			 	ft_strjoin.c		\
+			 	ft_strtrim.c		\
+			 	ft_itoa.c			\
+			 	ft_split.c			\
+			 	ft_striteri.c		\
+			 	ft_strmapi.c		\
+				get_next_line.c		\
+				get_next_line_utils.c
 
 BONUS_SRCS_FILES = ft_lstnew.c			\
 			 	   ft_lstadd_front.c	\
