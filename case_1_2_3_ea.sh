@@ -5,9 +5,9 @@
 #ARG2=("9 8 7 1 0 2" "9 8 7 1 2 0")
 #ARG3=("9 8 7 2 0 1" "9 8 7 2 1 0")
 
-ARG1=("0 1 2 9 8 7" "0 2 1 9 8 7")
-ARG2=("1 0 2 9 8 7" "1 2 0 9 8 7")
-ARG3=("2 0 1 9 8 7" "2 1 0 9 8 7")
+# ARG1=("0 1 2 9 8 7" "0 2 1 9 8 7")
+# ARG2=("1 0 2 9 8 7" "1 2 0 9 8 7")
+# ARG3=("2 0 1 9 8 7" "2 1 0 9 8 7")
 
 ARG_cnt_0=("0" "0 1" "0 1 2")
 ARG_cnt_1=("1 0" "1 0 2" "1 2 0" "2 0 1")
@@ -16,10 +16,13 @@ ARG_cnt_2=("0 2 1" "2 1 0")
 my_pushswap()
 {
 	echo
-	echo
-	echo
 	echo "CASE : $i"
+	echo ---------------------------
 	./push_swap "$i"
+	echo ---------------------------
+	printf "Total : "
+	./push_swap "$i" | wc -l
+	printf "Sort : %s == %s\n" $(./push_swap "$i" | ./checker_Mac $i) $(./push_swap "$i" | ./checker $i)
 }
 
 # for i in "${ARG0[@]}"

@@ -6,7 +6,7 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 05:56:17 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/21 13:39:56 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/22 22:18:13 by minsuki2         ###   ########.fr       */
 /*                                                                            */ /* ************************************************************************** */
 
 #include "push_swap.h"
@@ -67,7 +67,7 @@ int av_check(char **av, t_stack **input)
 
 int main(int ac, char *av[])
 {
-	atexit(only_exit());
+	atexit(only_exit);
 	/* int	examine; */
 	/* int	cnt; */
 	//@@@@@@@@@@@@@@

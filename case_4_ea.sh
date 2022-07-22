@@ -23,7 +23,12 @@ my_pushswap()
 {
 	echo
 	echo "CASE : $i"
+	echo ---------------------------
 	./push_swap "$i"
+	echo ---------------------------
+	printf "Total : "
+	./push_swap "$i" | wc -l
+	printf "Sort : %s == %s\n" $(./push_swap "$i" | ./checker_Mac $i) $(./push_swap "$i" | ./checker $i)
 }
 
 for i in "${ARG0[@]}"
