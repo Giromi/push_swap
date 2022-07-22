@@ -6,7 +6,7 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 15:59:41 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/22 20:51:15 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/22 21:57:30 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ static int	follow_command_len3(t_cursor *head)
 		return (rx(head, head->cur_b));
 	else if (ft_strnstr(head->order, "ss\n", 3))
 	{
-		return (sx(head->cur_a));
+		sx(head->cur_a);
 		return (sx(head->cur_b));
 	}
 	else if (ft_strnstr(head->order, "rr\n", 3))
 	{
-		return (rx(head, head->cur_a));
+		rx(head, head->cur_a);
 		return (rx(head, head->cur_b));
 	}
 	return (ERROR);
@@ -79,7 +79,7 @@ static int	follow_command_len4(t_cursor *head)
 		return (rrx(head, head->cur_b));
 	else if (ft_strnstr(head->order, "rrr\n", 4))
 	{
-		return (rrx(head, head->cur_a));
+		rrx(head, head->cur_a);
 		return (rrx(head, head->cur_b));
 	}
 	return (ERROR);
