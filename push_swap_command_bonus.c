@@ -30,6 +30,7 @@ int	sx(t_stack *top)
 {
 	int		backup_int;
 	char	backup_char;
+
 	if (!top || !top->next)
 		return (ERROR);
 	backup_int = top->next->idx;
