@@ -6,7 +6,7 @@
 /*   By: minsuki2 <minsuki2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 17:02:34 by minsuki2          #+#    #+#             */
-/*   Updated: 2022/07/22 18:16:42 by minsuki2         ###   ########.fr       */
+/*   Updated: 2022/07/22 22:42:43 by minsuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ t_list	*ft_lstadd_back_last(t_list **lst, t_list *new)
 	{
 		tmp = *lst;
 		while (tmp->next)
-			 tmp = tmp->next;
+			tmp = tmp->next;
 		tmp->next = new;
 	}
 	return (new);
