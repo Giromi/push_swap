@@ -30,44 +30,38 @@ my_pushswap()
 	# my_pushswap
 # done
 
-for i in "${ARG1[@]}"
-do
-	my_pushswap
-done
-
-for i in "${ARG2[@]}"
-do
-	my_pushswap
-done
-
-for i in "${ARG3[@]}"
-do
-	my_pushswap
-done
-
-# echo
-# echo
-# echo "@@@@@@@ [Total = 0] @@@@@@@"
-# for i in "${ARG_cnt_0[@]}"
+# for i in "${ARG1[@]}"
 # do
 	# my_pushswap
 # done
 
-# echo
-# echo
-# echo "@@@@@@@ [Total = 1t] @@@@@@@"
-# for i in "${ARG_cnt_1[@]}"
+# for i in "${ARG2[@]}"
 # do
 	# my_pushswap
 # done
 
-# echo
-# echo
-# echo "@@@@@@@ [Total = 2] @@@@@@@"
-# for i in "${ARG_cnt_2[@]}"
+# for i in "${ARG3[@]}"
 # do
 	# my_pushswap
 # done
+
+echo "@@@@@@@ [Total = 0] @@@@@@@"
+for i in "${ARG_cnt_0[@]}"
+do
+	my_pushswap
+done
+
+echo "@@@@@@@ [Total = 1t] @@@@@@@"
+for i in "${ARG_cnt_1[@]}"
+do
+	my_pushswap
+done
+
+echo "@@@@@@@ [Total = 2] @@@@@@@"
+for i in "${ARG_cnt_2[@]}"
+do
+	my_pushswap
+done
 
 
 
